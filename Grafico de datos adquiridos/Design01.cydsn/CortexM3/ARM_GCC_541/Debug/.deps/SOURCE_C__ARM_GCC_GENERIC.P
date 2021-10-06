@@ -1,0 +1,72 @@
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/CortexM3/ARM_GCC_541/Debug/main.o : C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_AMux.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_Ext_CP_Clk.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_IRQ.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_theACLK.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyDmac.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyFlash.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyLib.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CySpc.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/I2COLED.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/I2COLED_PVT.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/InADC.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/InADC_aliases.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/Opamp.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SCL.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SCL_aliases.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SDA.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SDA_aliases.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_armcc.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_compiler.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_gcc.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/core_cm3.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyPm.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydevice.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydisabledsheets.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyfitter.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cypins.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cytypes.h C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/project.h C:/Users/Usuario/Documents/PSoC\ Creator/Generador\ de\ senales/main.c C:/Users/Usuario/Documents/PSoC\ Creator/Generador\ de\ senales/ssd1306.h 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_AMux.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_Ext_CP_Clk.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_IRQ.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/ADC_theACLK.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyDmac.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyFlash.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CyLib.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/CySpc.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/I2COLED.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/I2COLED_PVT.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/InADC.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/InADC_aliases.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/Opamp.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SCL.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SCL_aliases.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SDA.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/SDA_aliases.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_armcc.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_compiler.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cmsis_gcc.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/core_cm3.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyPm.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydevice.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydevice_trm.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cydisabledsheets.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyfitter.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cypins.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/cytypes.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Grafico\ de\ datos\ adquiridos/Design01.cydsn/Generated_Source/PSoC5/project.h : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Generador\ de\ senales/main.c : 
+
+C:/Users/Usuario/Documents/PSoC\ Creator/Generador\ de\ senales/ssd1306.h : 
+

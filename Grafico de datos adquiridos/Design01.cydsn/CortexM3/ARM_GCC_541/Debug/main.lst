@@ -1,0 +1,2060 @@
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	__aeabi_i2d
+  20              		.global	__aeabi_d2f
+  21              		.global	__aeabi_f2d
+  22              		.global	__aeabi_i2f
+  23              		.global	__aeabi_f2iz
+  24              		.section	.text.main,"ax",%progbits
+  25              		.align	2
+  26              		.global	main
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	main, %function
+  30              	main:
+  31              	.LFB64:
+  32              		.file 1 "..\\..\\Generador de senales\\main.c"
+   1:..\..\Generador de senales/main.c **** /* ========================================
+   2:..\..\Generador de senales/main.c ****  *
+   3:..\..\Generador de senales/main.c ****  * Gracias a Federico Vivaldi por su tutorial, su link: 
+   4:..\..\Generador de senales/main.c ****  * https://www.hackster.io/federico-vivaldi/oled-display-with-psoc5-714e24
+   5:..\..\Generador de senales/main.c ****  *
+   6:..\..\Generador de senales/main.c ****  *
+   7:..\..\Generador de senales/main.c ****  * Gracias a NRDaza por esta libreria, su link: 
+   8:..\..\Generador de senales/main.c ****  * https://github.com/NRDaza/Oled-Psoc5/tree/master/OLED.cydsn
+   9:..\..\Generador de senales/main.c ****  *
+  10:..\..\Generador de senales/main.c ****  * Gracias a AQUILES VAESA, su video fue la motivación a realizar este proyecto:
+  11:..\..\Generador de senales/main.c ****  * https://www.youtube.com/watch?v=ijmjDXAONzY
+  12:..\..\Generador de senales/main.c ****  *
+  13:..\..\Generador de senales/main.c ****  * ========================================
+  14:..\..\Generador de senales/main.c **** */
+  15:..\..\Generador de senales/main.c **** #include <project.h>
+  16:..\..\Generador de senales/main.c **** #include <stdlib.h>
+  17:..\..\Generador de senales/main.c **** #include <stdio.h>
+  18:..\..\Generador de senales/main.c **** 
+  19:..\..\Generador de senales/main.c **** #include "ssd1306.h"
+  20:..\..\Generador de senales/main.c **** 
+  21:..\..\Generador de senales/main.c **** #define DISPLAY_ADDRESS 0x3C // 011110+SA0+RW - 0x3C or 0x3D
+  22:..\..\Generador de senales/main.c **** 
+  23:..\..\Generador de senales/main.c **** int main(){
+  33              		.loc 1 23 0
+  34              		.cfi_startproc
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 2
+
+
+  35              		@ args = 0, pretend = 0, frame = 1040
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37 0000 30B5     		push	{r4, r5, lr}
+  38              		.cfi_def_cfa_offset 12
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  42 0002 ADF21C4D 		subw	sp, sp, #1052
+  43              		.cfi_def_cfa_offset 1064
+  24:..\..\Generador de senales/main.c **** 
+  25:..\..\Generador de senales/main.c ****    I2COLED_Start();
+  44              		.loc 1 25 0
+  45 0006 FFF7FEFF 		bl	I2COLED_Start
+  46              	.LVL0:
+  26:..\..\Generador de senales/main.c ****    Opamp_Start();
+  47              		.loc 1 26 0
+  48 000a FFF7FEFF 		bl	Opamp_Start
+  49              	.LVL1:
+  27:..\..\Generador de senales/main.c **** 
+  28:..\..\Generador de senales/main.c ****    ADC_Start();
+  50              		.loc 1 28 0
+  51 000e FFF7FEFF 		bl	ADC_Start
+  52              	.LVL2:
+  29:..\..\Generador de senales/main.c **** 
+  30:..\..\Generador de senales/main.c ****    int32 entero,voltaje;
+  31:..\..\Generador de senales/main.c ****    float32 ADC;
+  32:..\..\Generador de senales/main.c ****    char str[16];
+  33:..\..\Generador de senales/main.c ****    CyGlobalIntEnable;
+  53              		.loc 1 33 0
+  54              		.syntax unified
+  55              	@ 33 "..\..\Generador de senales\main.c" 1
+  56 0012 62B6     		CPSIE   i
+  57              	@ 0 "" 2
+  58              	.LVL3:
+  34:..\..\Generador de senales/main.c **** 
+  35:..\..\Generador de senales/main.c ****    float graficaVoltaje = 0;
+  36:..\..\Generador de senales/main.c **** 
+  37:..\..\Generador de senales/main.c ****    int x[128]; //buffer de la grafica 
+  38:..\..\Generador de senales/main.c ****    int y[128]; //buffer secundario de la grafica 
+  39:..\..\Generador de senales/main.c **** 
+  40:..\..\Generador de senales/main.c ****    display_init(DISPLAY_ADDRESS);
+  59              		.loc 1 40 0
+  60              		.thumb
+  61              		.syntax unified
+  62 0014 3C20     		movs	r0, #60
+  63 0016 FFF7FEFF 		bl	display_init
+  64              	.LVL4:
+  41:..\..\Generador de senales/main.c ****    gfx_setRotation(0);  // se escoje la orientacion del display puede ser 0 o 2
+  65              		.loc 1 41 0
+  66 001a 0020     		movs	r0, #0
+  67 001c FFF7FEFF 		bl	gfx_setRotation
+  68              	.LVL5:
+  42:..\..\Generador de senales/main.c ****    gfx_setTextColor(WHITE);
+  69              		.loc 1 42 0
+  70 0020 0120     		movs	r0, #1
+  71 0022 FFF7FEFF 		bl	gfx_setTextColor
+  72              	.LVL6:
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 3
+
+
+  43:..\..\Generador de senales/main.c ****    gfx_setTextSize(1);  // ajusta el tamaño de texto en el minimo valor
+  73              		.loc 1 43 0
+  74 0026 0120     		movs	r0, #1
+  75 0028 FFF7FEFF 		bl	gfx_setTextSize
+  76              	.LVL7:
+  77              	.LBB2:
+  44:..\..\Generador de senales/main.c **** 
+  45:..\..\Generador de senales/main.c ****   //llenamos las matrices con un valor fuera del rango de medicion >1023
+  46:..\..\Generador de senales/main.c ****    for(int i=127;i>=0;i--)   
+  78              		.loc 1 46 0
+  79 002c 7F23     		movs	r3, #127
+  80 002e 05E0     		b	.L2
+  81              	.LVL8:
+  82              	.L3:
+  47:..\..\Generador de senales/main.c ****     {
+  48:..\..\Generador de senales/main.c ****     x[i]=9999;
+  83              		.loc 1 48 0 discriminator 3
+  84 0030 42F20F71 		movw	r1, #9999
+  85 0034 82AA     		add	r2, sp, #520
+  86 0036 42F82310 		str	r1, [r2, r3, lsl #2]
+  46:..\..\Generador de senales/main.c ****     {
+  87              		.loc 1 46 0 discriminator 3
+  88 003a 013B     		subs	r3, r3, #1
+  89              	.LVL9:
+  90              	.L2:
+  46:..\..\Generador de senales/main.c ****     {
+  91              		.loc 1 46 0 is_stmt 0 discriminator 1
+  92 003c 002B     		cmp	r3, #0
+  93 003e F7DA     		bge	.L3
+  94 0040 7F23     		movs	r3, #127
+  95              	.LVL10:
+  96 0042 05E0     		b	.L4
+  97              	.LVL11:
+  98              	.L5:
+  99              	.LBE2:
+ 100              	.LBB3:
+  49:..\..\Generador de senales/main.c ****     }
+  50:..\..\Generador de senales/main.c ****    for(int i=127;i>=0;i--)
+  51:..\..\Generador de senales/main.c ****     {
+  52:..\..\Generador de senales/main.c ****     y[i]=9999;
+ 101              		.loc 1 52 0 is_stmt 1 discriminator 3
+ 102 0044 42F20F71 		movw	r1, #9999
+ 103 0048 02AA     		add	r2, sp, #8
+ 104 004a 42F82310 		str	r1, [r2, r3, lsl #2]
+  50:..\..\Generador de senales/main.c ****     {
+ 105              		.loc 1 50 0 discriminator 3
+ 106 004e 013B     		subs	r3, r3, #1
+ 107              	.LVL12:
+ 108              	.L4:
+  50:..\..\Generador de senales/main.c ****     {
+ 109              		.loc 1 50 0 is_stmt 0 discriminator 1
+ 110 0050 002B     		cmp	r3, #0
+ 111 0052 F7DA     		bge	.L5
+ 112              	.LVL13:
+ 113              	.L10:
+ 114              	.LBE3:
+  53:..\..\Generador de senales/main.c ****     }
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 4
+
+
+  54:..\..\Generador de senales/main.c **** 
+  55:..\..\Generador de senales/main.c ****     
+  56:..\..\Generador de senales/main.c ****     for(;;){
+  57:..\..\Generador de senales/main.c ****         display_clear();
+ 115              		.loc 1 57 0 is_stmt 1
+ 116 0054 FFF7FEFF 		bl	display_clear
+ 117              	.LVL14:
+  58:..\..\Generador de senales/main.c ****         ADC_StartConvert();
+ 118              		.loc 1 58 0
+ 119 0058 FFF7FEFF 		bl	ADC_StartConvert
+ 120              	.LVL15:
+  59:..\..\Generador de senales/main.c ****         ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+ 121              		.loc 1 59 0
+ 122 005c 0020     		movs	r0, #0
+ 123 005e FFF7FEFF 		bl	ADC_IsEndConversion
+ 124              	.LVL16:
+  60:..\..\Generador de senales/main.c ****         entero = ADC_GetResult32();
+ 125              		.loc 1 60 0
+ 126 0062 FFF7FEFF 		bl	ADC_GetResult32
+ 127              	.LVL17:
+ 128 0066 0546     		mov	r5, r0
+ 129              	.LVL18:
+  61:..\..\Generador de senales/main.c ****         ADC_StopConvert();
+ 130              		.loc 1 61 0
+ 131 0068 FFF7FEFF 		bl	ADC_StopConvert
+ 132              	.LVL19:
+  62:..\..\Generador de senales/main.c ****         voltaje = ADC_CountsTo_mVolts(entero);
+ 133              		.loc 1 62 0
+ 134 006c 2846     		mov	r0, r5
+ 135 006e FFF7FEFF 		bl	ADC_CountsTo_mVolts
+ 136              	.LVL20:
+  63:..\..\Generador de senales/main.c ****         ADC = (voltaje / 1.00);
+ 137              		.loc 1 63 0
+ 138 0072 FFF7FEFF 		bl	__aeabi_i2d
+ 139              	.LVL21:
+ 140 0076 FFF7FEFF 		bl	__aeabi_d2f
+ 141              	.LVL22:
+  64:..\..\Generador de senales/main.c ****         sprintf(str,"%.2f",ADC);
+ 142              		.loc 1 64 0
+ 143 007a FFF7FEFF 		bl	__aeabi_f2d
+ 144              	.LVL23:
+ 145 007e 0246     		mov	r2, r0
+ 146 0080 0B46     		mov	r3, r1
+ 147 0082 4C49     		ldr	r1, .L12
+ 148 0084 0DF58160 		add	r0, sp, #1032
+ 149 0088 FFF7FEFF 		bl	sprintf
+ 150              	.LVL24:
+  65:..\..\Generador de senales/main.c ****         
+  66:..\..\Generador de senales/main.c ****         //dibuja escala
+  67:..\..\Generador de senales/main.c ****         gfx_setCursor(0, 0); 
+ 151              		.loc 1 67 0
+ 152 008c 0021     		movs	r1, #0
+ 153 008e 0846     		mov	r0, r1
+ 154 0090 FFF7FEFF 		bl	gfx_setCursor
+ 155              	.LVL25:
+  68:..\..\Generador de senales/main.c ****         gfx_print(("5V")); 
+ 156              		.loc 1 68 0
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 5
+
+
+ 157 0094 4848     		ldr	r0, .L12+4
+ 158 0096 FFF7FEFF 		bl	gfx_print
+ 159              	.LVL26:
+  69:..\..\Generador de senales/main.c ****         gfx_setCursor(0, 11);   
+ 160              		.loc 1 69 0
+ 161 009a 0B21     		movs	r1, #11
+ 162 009c 0020     		movs	r0, #0
+ 163 009e FFF7FEFF 		bl	gfx_setCursor
+ 164              	.LVL27:
+  70:..\..\Generador de senales/main.c ****         gfx_print(("4V"));
+ 165              		.loc 1 70 0
+ 166 00a2 4648     		ldr	r0, .L12+8
+ 167 00a4 FFF7FEFF 		bl	gfx_print
+ 168              	.LVL28:
+  71:..\..\Generador de senales/main.c ****         gfx_setCursor(0, 22); 
+ 169              		.loc 1 71 0
+ 170 00a8 1621     		movs	r1, #22
+ 171 00aa 0020     		movs	r0, #0
+ 172 00ac FFF7FEFF 		bl	gfx_setCursor
+ 173              	.LVL29:
+  72:..\..\Generador de senales/main.c ****         gfx_print(("3V"));
+ 174              		.loc 1 72 0
+ 175 00b0 4348     		ldr	r0, .L12+12
+ 176 00b2 FFF7FEFF 		bl	gfx_print
+ 177              	.LVL30:
+  73:..\..\Generador de senales/main.c ****         gfx_setCursor(0, 32);  
+ 178              		.loc 1 73 0
+ 179 00b6 2021     		movs	r1, #32
+ 180 00b8 0020     		movs	r0, #0
+ 181 00ba FFF7FEFF 		bl	gfx_setCursor
+ 182              	.LVL31:
+  74:..\..\Generador de senales/main.c ****         gfx_print(("2V"));      
+ 183              		.loc 1 74 0
+ 184 00be 4148     		ldr	r0, .L12+16
+ 185 00c0 FFF7FEFF 		bl	gfx_print
+ 186              	.LVL32:
+  75:..\..\Generador de senales/main.c ****         gfx_setCursor(0, 43); 
+ 187              		.loc 1 75 0
+ 188 00c4 2B21     		movs	r1, #43
+ 189 00c6 0020     		movs	r0, #0
+ 190 00c8 FFF7FEFF 		bl	gfx_setCursor
+ 191              	.LVL33:
+  76:..\..\Generador de senales/main.c ****         gfx_print(("1V")); 
+ 192              		.loc 1 76 0
+ 193 00cc 3E48     		ldr	r0, .L12+20
+ 194 00ce FFF7FEFF 		bl	gfx_print
+ 195              	.LVL34:
+  77:..\..\Generador de senales/main.c **** 
+  78:..\..\Generador de senales/main.c ****         gfx_drawLine(15, 0, 25, 0, WHITE);
+ 196              		.loc 1 78 0
+ 197 00d2 0124     		movs	r4, #1
+ 198 00d4 0094     		str	r4, [sp]
+ 199 00d6 0023     		movs	r3, #0
+ 200 00d8 1922     		movs	r2, #25
+ 201 00da 1946     		mov	r1, r3
+ 202 00dc 0F20     		movs	r0, #15
+ 203 00de FFF7FEFF 		bl	gfx_drawLine
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 6
+
+
+ 204              	.LVL35:
+  79:..\..\Generador de senales/main.c ****         gfx_drawLine(15, 11, 25, 11, WHITE);
+ 205              		.loc 1 79 0
+ 206 00e2 0094     		str	r4, [sp]
+ 207 00e4 0B23     		movs	r3, #11
+ 208 00e6 1922     		movs	r2, #25
+ 209 00e8 1946     		mov	r1, r3
+ 210 00ea 0F20     		movs	r0, #15
+ 211 00ec FFF7FEFF 		bl	gfx_drawLine
+ 212              	.LVL36:
+  80:..\..\Generador de senales/main.c ****         gfx_drawLine(15, 22, 25, 22, WHITE);
+ 213              		.loc 1 80 0
+ 214 00f0 0094     		str	r4, [sp]
+ 215 00f2 1623     		movs	r3, #22
+ 216 00f4 1922     		movs	r2, #25
+ 217 00f6 1946     		mov	r1, r3
+ 218 00f8 0F20     		movs	r0, #15
+ 219 00fa FFF7FEFF 		bl	gfx_drawLine
+ 220              	.LVL37:
+  81:..\..\Generador de senales/main.c ****         gfx_drawLine(15, 32, 25, 32, WHITE);
+ 221              		.loc 1 81 0
+ 222 00fe 0094     		str	r4, [sp]
+ 223 0100 2023     		movs	r3, #32
+ 224 0102 1922     		movs	r2, #25
+ 225 0104 1946     		mov	r1, r3
+ 226 0106 0F20     		movs	r0, #15
+ 227 0108 FFF7FEFF 		bl	gfx_drawLine
+ 228              	.LVL38:
+  82:..\..\Generador de senales/main.c ****         gfx_drawLine(15, 43, 25, 43, WHITE);
+ 229              		.loc 1 82 0
+ 230 010c 0094     		str	r4, [sp]
+ 231 010e 2B23     		movs	r3, #43
+ 232 0110 1922     		movs	r2, #25
+ 233 0112 1946     		mov	r1, r3
+ 234 0114 0F20     		movs	r0, #15
+ 235 0116 FFF7FEFF 		bl	gfx_drawLine
+ 236              	.LVL39:
+  83:..\..\Generador de senales/main.c ****         //dibuja eje X y Y 
+  84:..\..\Generador de senales/main.c ****         gfx_drawLine(0, 53, 127, 53, WHITE);
+ 237              		.loc 1 84 0
+ 238 011a 0094     		str	r4, [sp]
+ 239 011c 3523     		movs	r3, #53
+ 240 011e 7F22     		movs	r2, #127
+ 241 0120 1946     		mov	r1, r3
+ 242 0122 0020     		movs	r0, #0
+ 243 0124 FFF7FEFF 		bl	gfx_drawLine
+ 244              	.LVL40:
+  85:..\..\Generador de senales/main.c ****         gfx_drawLine(25, 53, 25, 0, WHITE);
+ 245              		.loc 1 85 0
+ 246 0128 0094     		str	r4, [sp]
+ 247 012a 0023     		movs	r3, #0
+ 248 012c 1922     		movs	r2, #25
+ 249 012e 3521     		movs	r1, #53
+ 250 0130 1046     		mov	r0, r2
+ 251 0132 FFF7FEFF 		bl	gfx_drawLine
+ 252              	.LVL41:
+  86:..\..\Generador de senales/main.c ****  
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 7
+
+
+  87:..\..\Generador de senales/main.c ****         graficaVoltaje= 53 - 53*entero/1023;
+ 253              		.loc 1 87 0
+ 254 0136 3523     		movs	r3, #53
+ 255 0138 03FB05F3 		mul	r3, r3, r5
+ 256 013c 2348     		ldr	r0, .L12+24
+ 257 013e 80FB0320 		smull	r2, r0, r0, r3
+ 258 0142 1844     		add	r0, r0, r3
+ 259 0144 DB17     		asrs	r3, r3, #31
+ 260 0146 C3EB6020 		rsb	r0, r3, r0, asr #9
+ 261 014a C0F13500 		rsb	r0, r0, #53
+ 262 014e FFF7FEFF 		bl	__aeabi_i2f
+ 263              	.LVL42:
+  88:..\..\Generador de senales/main.c ****        
+  89:..\..\Generador de senales/main.c ****         x[127]=graficaVoltaje; //asigna el valor escalado a el ultimo dato de la matriz
+ 264              		.loc 1 89 0
+ 265 0152 FFF7FEFF 		bl	__aeabi_f2iz
+ 266              	.LVL43:
+ 267 0156 CDF80404 		str	r0, [sp, #1028]
+ 268              	.LVL44:
+ 269              	.LBB4:
+  90:..\..\Generador de senales/main.c ****   
+  91:..\..\Generador de senales/main.c ****         for(int i=127;i>=25;i--)
+ 270              		.loc 1 91 0
+ 271 015a 7F24     		movs	r4, #127
+ 272 015c 0BE0     		b	.L6
+ 273              	.LVL45:
+ 274              	.L7:
+  92:..\..\Generador de senales/main.c ****         { 
+  93:..\..\Generador de senales/main.c ****             gfx_drawPixel(i, x[i], WHITE); //dibuja punto a punto el contenido de x
+ 275              		.loc 1 93 0 discriminator 3
+ 276 015e 82AB     		add	r3, sp, #520
+ 277 0160 53F82450 		ldr	r5, [r3, r4, lsl #2]
+ 278 0164 0122     		movs	r2, #1
+ 279 0166 29B2     		sxth	r1, r5
+ 280 0168 20B2     		sxth	r0, r4
+ 281 016a FFF7FEFF 		bl	gfx_drawPixel
+ 282              	.LVL46:
+  94:..\..\Generador de senales/main.c ****             y[i-1]=x[i]; //guarda la informacion desplazada una posicion temporalmente en y
+ 283              		.loc 1 94 0 discriminator 3
+ 284 016e 013C     		subs	r4, r4, #1
+ 285              	.LVL47:
+ 286 0170 02AB     		add	r3, sp, #8
+ 287 0172 43F82450 		str	r5, [r3, r4, lsl #2]
+ 288              	.LVL48:
+ 289              	.L6:
+  91:..\..\Generador de senales/main.c ****         { 
+ 290              		.loc 1 91 0 discriminator 1
+ 291 0176 182C     		cmp	r4, #24
+ 292 0178 F1DC     		bgt	.L7
+ 293              	.LBE4:
+  95:..\..\Generador de senales/main.c ****         }
+  96:..\..\Generador de senales/main.c ****         //imprime el voltaje en texto  
+  97:..\..\Generador de senales/main.c ****         gfx_setCursor(25, 57); 
+ 294              		.loc 1 97 0
+ 295 017a 3921     		movs	r1, #57
+ 296 017c 1920     		movs	r0, #25
+ 297 017e FFF7FEFF 		bl	gfx_setCursor
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 8
+
+
+ 298              	.LVL49:
+  98:..\..\Generador de senales/main.c ****         gfx_print(str);
+ 299              		.loc 1 98 0
+ 300 0182 0DF58160 		add	r0, sp, #1032
+ 301 0186 FFF7FEFF 		bl	gfx_print
+ 302              	.LVL50:
+  99:..\..\Generador de senales/main.c ****         gfx_print((" v    "));
+ 303              		.loc 1 99 0
+ 304 018a 1148     		ldr	r0, .L12+28
+ 305 018c FFF7FEFF 		bl	gfx_print
+ 306              	.LVL51:
+ 307              	.LBB5:
+ 100:..\..\Generador de senales/main.c **** 
+ 101:..\..\Generador de senales/main.c ****         for(int i=127;i>=0;i--)
+ 308              		.loc 1 101 0
+ 309 0190 7F23     		movs	r3, #127
+ 310 0192 06E0     		b	.L8
+ 311              	.LVL52:
+ 312              	.L9:
+ 102:..\..\Generador de senales/main.c ****                 {
+ 103:..\..\Generador de senales/main.c ****                 x[i]=y[i]; //envia los datos desplazados de vuelta a la variable x
+ 313              		.loc 1 103 0 discriminator 3
+ 314 0194 02AA     		add	r2, sp, #8
+ 315 0196 52F82310 		ldr	r1, [r2, r3, lsl #2]
+ 316 019a 82AA     		add	r2, sp, #520
+ 317 019c 42F82310 		str	r1, [r2, r3, lsl #2]
+ 101:..\..\Generador de senales/main.c ****                 {
+ 318              		.loc 1 101 0 discriminator 3
+ 319 01a0 013B     		subs	r3, r3, #1
+ 320              	.LVL53:
+ 321              	.L8:
+ 101:..\..\Generador de senales/main.c ****                 {
+ 322              		.loc 1 101 0 is_stmt 0 discriminator 1
+ 323 01a2 002B     		cmp	r3, #0
+ 324 01a4 F6DA     		bge	.L9
+ 325              	.LBE5:
+ 104:..\..\Generador de senales/main.c ****                 }
+ 105:..\..\Generador de senales/main.c ****         CyDelay(10);
+ 326              		.loc 1 105 0 is_stmt 1
+ 327 01a6 0A20     		movs	r0, #10
+ 328 01a8 FFF7FEFF 		bl	CyDelay
+ 329              	.LVL54:
+ 106:..\..\Generador de senales/main.c ****         display_update();
+ 330              		.loc 1 106 0
+ 331 01ac FFF7FEFF 		bl	display_update
+ 332              	.LVL55:
+ 107:..\..\Generador de senales/main.c ****     }
+ 333              		.loc 1 107 0
+ 334 01b0 50E7     		b	.L10
+ 335              	.L13:
+ 336 01b2 00BF     		.align	2
+ 337              	.L12:
+ 338 01b4 00000000 		.word	.LC0
+ 339 01b8 08000000 		.word	.LC1
+ 340 01bc 0C000000 		.word	.LC2
+ 341 01c0 10000000 		.word	.LC3
+ 342 01c4 14000000 		.word	.LC4
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 9
+
+
+ 343 01c8 18000000 		.word	.LC5
+ 344 01cc 03082080 		.word	-2145384445
+ 345 01d0 1C000000 		.word	.LC6
+ 346              		.cfi_endproc
+ 347              	.LFE64:
+ 348              		.size	main, .-main
+ 349              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 350              		.align	2
+ 351              	.LC0:
+ 352 0000 252E3266 		.ascii	"%.2f\000"
+ 352      00
+ 353 0005 000000   		.space	3
+ 354              	.LC1:
+ 355 0008 355600   		.ascii	"5V\000"
+ 356 000b 00       		.space	1
+ 357              	.LC2:
+ 358 000c 345600   		.ascii	"4V\000"
+ 359 000f 00       		.space	1
+ 360              	.LC3:
+ 361 0010 335600   		.ascii	"3V\000"
+ 362 0013 00       		.space	1
+ 363              	.LC4:
+ 364 0014 325600   		.ascii	"2V\000"
+ 365 0017 00       		.space	1
+ 366              	.LC5:
+ 367 0018 315600   		.ascii	"1V\000"
+ 368 001b 00       		.space	1
+ 369              	.LC6:
+ 370 001c 20762020 		.ascii	" v    \000"
+ 370      202000
+ 371              		.text
+ 372              	.Letext0:
+ 373              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 374              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 375              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 376              		.file 5 "..\\..\\Generador de senales\\ssd1306.h"
+ 377              		.file 6 "Generated_Source\\PSoC5/I2COLED.h"
+ 378              		.file 7 "Generated_Source\\PSoC5/Opamp.h"
+ 379              		.file 8 "Generated_Source\\PSoC5/ADC.h"
+ 380              		.file 9 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 381              		.file 10 "Generated_Source\\PSoC5/CyLib.h"
+ 382              		.file 11 "Generated_Source\\PSoC5/core_cm3.h"
+ 383              		.section	.debug_info,"",%progbits
+ 384              	.Ldebug_info0:
+ 385 0000 0F060000 		.4byte	0x60f
+ 386 0004 0400     		.2byte	0x4
+ 387 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 388 000a 04       		.byte	0x4
+ 389 000b 01       		.uleb128 0x1
+ 390 000c 89000000 		.4byte	.LASF41
+ 391 0010 0C       		.byte	0xc
+ 392 0011 9B020000 		.4byte	.LASF42
+ 393 0015 0D020000 		.4byte	.LASF43
+ 394 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 395 001d 00000000 		.4byte	0
+ 396 0021 00000000 		.4byte	.Ldebug_line0
+ 397 0025 02       		.uleb128 0x2
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 10
+
+
+ 398 0026 01       		.byte	0x1
+ 399 0027 06       		.byte	0x6
+ 400 0028 E4020000 		.4byte	.LASF0
+ 401 002c 02       		.uleb128 0x2
+ 402 002d 01       		.byte	0x1
+ 403 002e 08       		.byte	0x8
+ 404 002f 7B000000 		.4byte	.LASF1
+ 405 0033 02       		.uleb128 0x2
+ 406 0034 02       		.byte	0x2
+ 407 0035 05       		.byte	0x5
+ 408 0036 87020000 		.4byte	.LASF2
+ 409 003a 02       		.uleb128 0x2
+ 410 003b 02       		.byte	0x2
+ 411 003c 07       		.byte	0x7
+ 412 003d 35000000 		.4byte	.LASF3
+ 413 0041 03       		.uleb128 0x3
+ 414 0042 17000000 		.4byte	.LASF9
+ 415 0046 02       		.byte	0x2
+ 416 0047 3F       		.byte	0x3f
+ 417 0048 4C000000 		.4byte	0x4c
+ 418 004c 02       		.uleb128 0x2
+ 419 004d 04       		.byte	0x4
+ 420 004e 05       		.byte	0x5
+ 421 004f BD020000 		.4byte	.LASF4
+ 422 0053 02       		.uleb128 0x2
+ 423 0054 04       		.byte	0x4
+ 424 0055 07       		.byte	0x7
+ 425 0056 75010000 		.4byte	.LASF5
+ 426 005a 02       		.uleb128 0x2
+ 427 005b 08       		.byte	0x8
+ 428 005c 05       		.byte	0x5
+ 429 005d 60020000 		.4byte	.LASF6
+ 430 0061 02       		.uleb128 0x2
+ 431 0062 08       		.byte	0x8
+ 432 0063 07       		.byte	0x7
+ 433 0064 CD010000 		.4byte	.LASF7
+ 434 0068 04       		.uleb128 0x4
+ 435 0069 04       		.byte	0x4
+ 436 006a 05       		.byte	0x5
+ 437 006b 696E7400 		.ascii	"int\000"
+ 438 006f 02       		.uleb128 0x2
+ 439 0070 04       		.byte	0x4
+ 440 0071 07       		.byte	0x7
+ 441 0072 B2010000 		.4byte	.LASF8
+ 442 0076 03       		.uleb128 0x3
+ 443 0077 4F000000 		.4byte	.LASF10
+ 444 007b 03       		.byte	0x3
+ 445 007c 2C       		.byte	0x2c
+ 446 007d 41000000 		.4byte	0x41
+ 447 0081 05       		.uleb128 0x5
+ 448 0082 FE010000 		.4byte	.LASF11
+ 449 0086 04       		.byte	0x4
+ 450 0087 ED01     		.2byte	0x1ed
+ 451 0089 4C000000 		.4byte	0x4c
+ 452 008d 05       		.uleb128 0x5
+ 453 008e 9B010000 		.4byte	.LASF12
+ 454 0092 04       		.byte	0x4
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 11
+
+
+ 455 0093 EE01     		.2byte	0x1ee
+ 456 0095 99000000 		.4byte	0x99
+ 457 0099 02       		.uleb128 0x2
+ 458 009a 04       		.byte	0x4
+ 459 009b 04       		.byte	0x4
+ 460 009c 65000000 		.4byte	.LASF13
+ 461 00a0 02       		.uleb128 0x2
+ 462 00a1 08       		.byte	0x8
+ 463 00a2 04       		.byte	0x4
+ 464 00a3 48000000 		.4byte	.LASF14
+ 465 00a7 02       		.uleb128 0x2
+ 466 00a8 01       		.byte	0x1
+ 467 00a9 08       		.byte	0x8
+ 468 00aa C6020000 		.4byte	.LASF15
+ 469 00ae 02       		.uleb128 0x2
+ 470 00af 08       		.byte	0x8
+ 471 00b0 04       		.byte	0x4
+ 472 00b1 D8020000 		.4byte	.LASF16
+ 473 00b5 02       		.uleb128 0x2
+ 474 00b6 04       		.byte	0x4
+ 475 00b7 07       		.byte	0x7
+ 476 00b8 04020000 		.4byte	.LASF17
+ 477 00bc 06       		.uleb128 0x6
+ 478 00bd 87010000 		.4byte	.LASF44
+ 479 00c1 01       		.byte	0x1
+ 480 00c2 17       		.byte	0x17
+ 481 00c3 68000000 		.4byte	0x68
+ 482 00c7 00000000 		.4byte	.LFB64
+ 483 00cb D4010000 		.4byte	.LFE64-.LFB64
+ 484 00cf 01       		.uleb128 0x1
+ 485 00d0 9C       		.byte	0x9c
+ 486 00d1 05050000 		.4byte	0x505
+ 487 00d5 07       		.uleb128 0x7
+ 488 00d6 10000000 		.4byte	.LASF18
+ 489 00da 01       		.byte	0x1
+ 490 00db 1E       		.byte	0x1e
+ 491 00dc 81000000 		.4byte	0x81
+ 492 00e0 00000000 		.4byte	.LLST0
+ 493 00e4 07       		.uleb128 0x7
+ 494 00e5 11030000 		.4byte	.LASF19
+ 495 00e9 01       		.byte	0x1
+ 496 00ea 1E       		.byte	0x1e
+ 497 00eb 81000000 		.4byte	0x81
+ 498 00ef 1E000000 		.4byte	.LLST1
+ 499 00f3 08       		.uleb128 0x8
+ 500 00f4 41444300 		.ascii	"ADC\000"
+ 501 00f8 01       		.byte	0x1
+ 502 00f9 1F       		.byte	0x1f
+ 503 00fa 8D000000 		.4byte	0x8d
+ 504 00fe 37000000 		.4byte	.LLST2
+ 505 0102 09       		.uleb128 0x9
+ 506 0103 73747200 		.ascii	"str\000"
+ 507 0107 01       		.byte	0x1
+ 508 0108 20       		.byte	0x20
+ 509 0109 05050000 		.4byte	0x505
+ 510 010d 02       		.uleb128 0x2
+ 511 010e 91       		.byte	0x91
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 12
+
+
+ 512 010f 60       		.sleb128 -32
+ 513 0110 07       		.uleb128 0x7
+ 514 0111 A3010000 		.4byte	.LASF20
+ 515 0115 01       		.byte	0x1
+ 516 0116 23       		.byte	0x23
+ 517 0117 99000000 		.4byte	0x99
+ 518 011b 4A000000 		.4byte	.LLST3
+ 519 011f 09       		.uleb128 0x9
+ 520 0120 7800     		.ascii	"x\000"
+ 521 0122 01       		.byte	0x1
+ 522 0123 25       		.byte	0x25
+ 523 0124 15050000 		.4byte	0x515
+ 524 0128 03       		.uleb128 0x3
+ 525 0129 91       		.byte	0x91
+ 526 012a E07B     		.sleb128 -544
+ 527 012c 09       		.uleb128 0x9
+ 528 012d 7900     		.ascii	"y\000"
+ 529 012f 01       		.byte	0x1
+ 530 0130 26       		.byte	0x26
+ 531 0131 15050000 		.4byte	0x515
+ 532 0135 03       		.uleb128 0x3
+ 533 0136 91       		.byte	0x91
+ 534 0137 E077     		.sleb128 -1056
+ 535 0139 0A       		.uleb128 0xa
+ 536 013a 2C000000 		.4byte	.LBB2
+ 537 013e 18000000 		.4byte	.LBE2-.LBB2
+ 538 0142 54010000 		.4byte	0x154
+ 539 0146 08       		.uleb128 0x8
+ 540 0147 6900     		.ascii	"i\000"
+ 541 0149 01       		.byte	0x1
+ 542 014a 2E       		.byte	0x2e
+ 543 014b 68000000 		.4byte	0x68
+ 544 014f 6D000000 		.4byte	.LLST4
+ 545 0153 00       		.byte	0
+ 546 0154 0A       		.uleb128 0xa
+ 547 0155 44000000 		.4byte	.LBB3
+ 548 0159 10000000 		.4byte	.LBE3-.LBB3
+ 549 015d 6F010000 		.4byte	0x16f
+ 550 0161 08       		.uleb128 0x8
+ 551 0162 6900     		.ascii	"i\000"
+ 552 0164 01       		.byte	0x1
+ 553 0165 32       		.byte	0x32
+ 554 0166 68000000 		.4byte	0x68
+ 555 016a 8D000000 		.4byte	.LLST5
+ 556 016e 00       		.byte	0
+ 557 016f 0A       		.uleb128 0xa
+ 558 0170 5A010000 		.4byte	.LBB4
+ 559 0174 20000000 		.4byte	.LBE4-.LBB4
+ 560 0178 A5010000 		.4byte	0x1a5
+ 561 017c 08       		.uleb128 0x8
+ 562 017d 6900     		.ascii	"i\000"
+ 563 017f 01       		.byte	0x1
+ 564 0180 5B       		.byte	0x5b
+ 565 0181 68000000 		.4byte	0x68
+ 566 0185 A0000000 		.4byte	.LLST6
+ 567 0189 0B       		.uleb128 0xb
+ 568 018a 6E010000 		.4byte	.LVL46
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 13
+
+
+ 569 018e 36050000 		.4byte	0x536
+ 570 0192 0C       		.uleb128 0xc
+ 571 0193 01       		.uleb128 0x1
+ 572 0194 50       		.byte	0x50
+ 573 0195 02       		.uleb128 0x2
+ 574 0196 74       		.byte	0x74
+ 575 0197 00       		.sleb128 0
+ 576 0198 0C       		.uleb128 0xc
+ 577 0199 01       		.uleb128 0x1
+ 578 019a 51       		.byte	0x51
+ 579 019b 02       		.uleb128 0x2
+ 580 019c 75       		.byte	0x75
+ 581 019d 00       		.sleb128 0
+ 582 019e 0C       		.uleb128 0xc
+ 583 019f 01       		.uleb128 0x1
+ 584 01a0 52       		.byte	0x52
+ 585 01a1 01       		.uleb128 0x1
+ 586 01a2 31       		.byte	0x31
+ 587 01a3 00       		.byte	0
+ 588 01a4 00       		.byte	0
+ 589 01a5 0A       		.uleb128 0xa
+ 590 01a6 90010000 		.4byte	.LBB5
+ 591 01aa 16000000 		.4byte	.LBE5-.LBB5
+ 592 01ae C0010000 		.4byte	0x1c0
+ 593 01b2 08       		.uleb128 0x8
+ 594 01b3 6900     		.ascii	"i\000"
+ 595 01b5 01       		.byte	0x1
+ 596 01b6 65       		.byte	0x65
+ 597 01b7 68000000 		.4byte	0x68
+ 598 01bb D8000000 		.4byte	.LLST7
+ 599 01bf 00       		.byte	0
+ 600 01c0 0D       		.uleb128 0xd
+ 601 01c1 0A000000 		.4byte	.LVL0
+ 602 01c5 41050000 		.4byte	0x541
+ 603 01c9 0D       		.uleb128 0xd
+ 604 01ca 0E000000 		.4byte	.LVL1
+ 605 01ce 4C050000 		.4byte	0x54c
+ 606 01d2 0D       		.uleb128 0xd
+ 607 01d3 12000000 		.4byte	.LVL2
+ 608 01d7 57050000 		.4byte	0x557
+ 609 01db 0E       		.uleb128 0xe
+ 610 01dc 1A000000 		.4byte	.LVL4
+ 611 01e0 62050000 		.4byte	0x562
+ 612 01e4 EF010000 		.4byte	0x1ef
+ 613 01e8 0C       		.uleb128 0xc
+ 614 01e9 01       		.uleb128 0x1
+ 615 01ea 50       		.byte	0x50
+ 616 01eb 02       		.uleb128 0x2
+ 617 01ec 08       		.byte	0x8
+ 618 01ed 3C       		.byte	0x3c
+ 619 01ee 00       		.byte	0
+ 620 01ef 0E       		.uleb128 0xe
+ 621 01f0 20000000 		.4byte	.LVL5
+ 622 01f4 6D050000 		.4byte	0x56d
+ 623 01f8 02020000 		.4byte	0x202
+ 624 01fc 0C       		.uleb128 0xc
+ 625 01fd 01       		.uleb128 0x1
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 14
+
+
+ 626 01fe 50       		.byte	0x50
+ 627 01ff 01       		.uleb128 0x1
+ 628 0200 30       		.byte	0x30
+ 629 0201 00       		.byte	0
+ 630 0202 0E       		.uleb128 0xe
+ 631 0203 26000000 		.4byte	.LVL6
+ 632 0207 78050000 		.4byte	0x578
+ 633 020b 15020000 		.4byte	0x215
+ 634 020f 0C       		.uleb128 0xc
+ 635 0210 01       		.uleb128 0x1
+ 636 0211 50       		.byte	0x50
+ 637 0212 01       		.uleb128 0x1
+ 638 0213 31       		.byte	0x31
+ 639 0214 00       		.byte	0
+ 640 0215 0E       		.uleb128 0xe
+ 641 0216 2C000000 		.4byte	.LVL7
+ 642 021a 83050000 		.4byte	0x583
+ 643 021e 28020000 		.4byte	0x228
+ 644 0222 0C       		.uleb128 0xc
+ 645 0223 01       		.uleb128 0x1
+ 646 0224 50       		.byte	0x50
+ 647 0225 01       		.uleb128 0x1
+ 648 0226 31       		.byte	0x31
+ 649 0227 00       		.byte	0
+ 650 0228 0D       		.uleb128 0xd
+ 651 0229 58000000 		.4byte	.LVL14
+ 652 022d 8E050000 		.4byte	0x58e
+ 653 0231 0D       		.uleb128 0xd
+ 654 0232 5C000000 		.4byte	.LVL15
+ 655 0236 99050000 		.4byte	0x599
+ 656 023a 0E       		.uleb128 0xe
+ 657 023b 62000000 		.4byte	.LVL16
+ 658 023f A4050000 		.4byte	0x5a4
+ 659 0243 4D020000 		.4byte	0x24d
+ 660 0247 0C       		.uleb128 0xc
+ 661 0248 01       		.uleb128 0x1
+ 662 0249 50       		.byte	0x50
+ 663 024a 01       		.uleb128 0x1
+ 664 024b 30       		.byte	0x30
+ 665 024c 00       		.byte	0
+ 666 024d 0D       		.uleb128 0xd
+ 667 024e 66000000 		.4byte	.LVL17
+ 668 0252 AF050000 		.4byte	0x5af
+ 669 0256 0D       		.uleb128 0xd
+ 670 0257 6C000000 		.4byte	.LVL19
+ 671 025b BA050000 		.4byte	0x5ba
+ 672 025f 0E       		.uleb128 0xe
+ 673 0260 72000000 		.4byte	.LVL20
+ 674 0264 C5050000 		.4byte	0x5c5
+ 675 0268 73020000 		.4byte	0x273
+ 676 026c 0C       		.uleb128 0xc
+ 677 026d 01       		.uleb128 0x1
+ 678 026e 50       		.byte	0x50
+ 679 026f 02       		.uleb128 0x2
+ 680 0270 75       		.byte	0x75
+ 681 0271 00       		.sleb128 0
+ 682 0272 00       		.byte	0
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 15
+
+
+ 683 0273 0E       		.uleb128 0xe
+ 684 0274 8C000000 		.4byte	.LVL24
+ 685 0278 D0050000 		.4byte	0x5d0
+ 686 027c 90020000 		.4byte	0x290
+ 687 0280 0C       		.uleb128 0xc
+ 688 0281 01       		.uleb128 0x1
+ 689 0282 50       		.byte	0x50
+ 690 0283 02       		.uleb128 0x2
+ 691 0284 91       		.byte	0x91
+ 692 0285 60       		.sleb128 -32
+ 693 0286 0C       		.uleb128 0xc
+ 694 0287 01       		.uleb128 0x1
+ 695 0288 51       		.byte	0x51
+ 696 0289 05       		.uleb128 0x5
+ 697 028a 03       		.byte	0x3
+ 698 028b 00000000 		.4byte	.LC0
+ 699 028f 00       		.byte	0
+ 700 0290 0E       		.uleb128 0xe
+ 701 0291 94000000 		.4byte	.LVL25
+ 702 0295 DB050000 		.4byte	0x5db
+ 703 0299 A8020000 		.4byte	0x2a8
+ 704 029d 0C       		.uleb128 0xc
+ 705 029e 01       		.uleb128 0x1
+ 706 029f 50       		.byte	0x50
+ 707 02a0 01       		.uleb128 0x1
+ 708 02a1 30       		.byte	0x30
+ 709 02a2 0C       		.uleb128 0xc
+ 710 02a3 01       		.uleb128 0x1
+ 711 02a4 51       		.byte	0x51
+ 712 02a5 01       		.uleb128 0x1
+ 713 02a6 30       		.byte	0x30
+ 714 02a7 00       		.byte	0
+ 715 02a8 0E       		.uleb128 0xe
+ 716 02a9 9A000000 		.4byte	.LVL26
+ 717 02ad E6050000 		.4byte	0x5e6
+ 718 02b1 BF020000 		.4byte	0x2bf
+ 719 02b5 0C       		.uleb128 0xc
+ 720 02b6 01       		.uleb128 0x1
+ 721 02b7 50       		.byte	0x50
+ 722 02b8 05       		.uleb128 0x5
+ 723 02b9 03       		.byte	0x3
+ 724 02ba 08000000 		.4byte	.LC1
+ 725 02be 00       		.byte	0
+ 726 02bf 0E       		.uleb128 0xe
+ 727 02c0 A2000000 		.4byte	.LVL27
+ 728 02c4 DB050000 		.4byte	0x5db
+ 729 02c8 D7020000 		.4byte	0x2d7
+ 730 02cc 0C       		.uleb128 0xc
+ 731 02cd 01       		.uleb128 0x1
+ 732 02ce 50       		.byte	0x50
+ 733 02cf 01       		.uleb128 0x1
+ 734 02d0 30       		.byte	0x30
+ 735 02d1 0C       		.uleb128 0xc
+ 736 02d2 01       		.uleb128 0x1
+ 737 02d3 51       		.byte	0x51
+ 738 02d4 01       		.uleb128 0x1
+ 739 02d5 3B       		.byte	0x3b
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 16
+
+
+ 740 02d6 00       		.byte	0
+ 741 02d7 0E       		.uleb128 0xe
+ 742 02d8 A8000000 		.4byte	.LVL28
+ 743 02dc E6050000 		.4byte	0x5e6
+ 744 02e0 EE020000 		.4byte	0x2ee
+ 745 02e4 0C       		.uleb128 0xc
+ 746 02e5 01       		.uleb128 0x1
+ 747 02e6 50       		.byte	0x50
+ 748 02e7 05       		.uleb128 0x5
+ 749 02e8 03       		.byte	0x3
+ 750 02e9 0C000000 		.4byte	.LC2
+ 751 02ed 00       		.byte	0
+ 752 02ee 0E       		.uleb128 0xe
+ 753 02ef B0000000 		.4byte	.LVL29
+ 754 02f3 DB050000 		.4byte	0x5db
+ 755 02f7 06030000 		.4byte	0x306
+ 756 02fb 0C       		.uleb128 0xc
+ 757 02fc 01       		.uleb128 0x1
+ 758 02fd 50       		.byte	0x50
+ 759 02fe 01       		.uleb128 0x1
+ 760 02ff 30       		.byte	0x30
+ 761 0300 0C       		.uleb128 0xc
+ 762 0301 01       		.uleb128 0x1
+ 763 0302 51       		.byte	0x51
+ 764 0303 01       		.uleb128 0x1
+ 765 0304 46       		.byte	0x46
+ 766 0305 00       		.byte	0
+ 767 0306 0E       		.uleb128 0xe
+ 768 0307 B6000000 		.4byte	.LVL30
+ 769 030b E6050000 		.4byte	0x5e6
+ 770 030f 1D030000 		.4byte	0x31d
+ 771 0313 0C       		.uleb128 0xc
+ 772 0314 01       		.uleb128 0x1
+ 773 0315 50       		.byte	0x50
+ 774 0316 05       		.uleb128 0x5
+ 775 0317 03       		.byte	0x3
+ 776 0318 10000000 		.4byte	.LC3
+ 777 031c 00       		.byte	0
+ 778 031d 0E       		.uleb128 0xe
+ 779 031e BE000000 		.4byte	.LVL31
+ 780 0322 DB050000 		.4byte	0x5db
+ 781 0326 36030000 		.4byte	0x336
+ 782 032a 0C       		.uleb128 0xc
+ 783 032b 01       		.uleb128 0x1
+ 784 032c 50       		.byte	0x50
+ 785 032d 01       		.uleb128 0x1
+ 786 032e 30       		.byte	0x30
+ 787 032f 0C       		.uleb128 0xc
+ 788 0330 01       		.uleb128 0x1
+ 789 0331 51       		.byte	0x51
+ 790 0332 02       		.uleb128 0x2
+ 791 0333 08       		.byte	0x8
+ 792 0334 20       		.byte	0x20
+ 793 0335 00       		.byte	0
+ 794 0336 0E       		.uleb128 0xe
+ 795 0337 C4000000 		.4byte	.LVL32
+ 796 033b E6050000 		.4byte	0x5e6
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 17
+
+
+ 797 033f 4D030000 		.4byte	0x34d
+ 798 0343 0C       		.uleb128 0xc
+ 799 0344 01       		.uleb128 0x1
+ 800 0345 50       		.byte	0x50
+ 801 0346 05       		.uleb128 0x5
+ 802 0347 03       		.byte	0x3
+ 803 0348 14000000 		.4byte	.LC4
+ 804 034c 00       		.byte	0
+ 805 034d 0E       		.uleb128 0xe
+ 806 034e CC000000 		.4byte	.LVL33
+ 807 0352 DB050000 		.4byte	0x5db
+ 808 0356 66030000 		.4byte	0x366
+ 809 035a 0C       		.uleb128 0xc
+ 810 035b 01       		.uleb128 0x1
+ 811 035c 50       		.byte	0x50
+ 812 035d 01       		.uleb128 0x1
+ 813 035e 30       		.byte	0x30
+ 814 035f 0C       		.uleb128 0xc
+ 815 0360 01       		.uleb128 0x1
+ 816 0361 51       		.byte	0x51
+ 817 0362 02       		.uleb128 0x2
+ 818 0363 08       		.byte	0x8
+ 819 0364 2B       		.byte	0x2b
+ 820 0365 00       		.byte	0
+ 821 0366 0E       		.uleb128 0xe
+ 822 0367 D2000000 		.4byte	.LVL34
+ 823 036b E6050000 		.4byte	0x5e6
+ 824 036f 7D030000 		.4byte	0x37d
+ 825 0373 0C       		.uleb128 0xc
+ 826 0374 01       		.uleb128 0x1
+ 827 0375 50       		.byte	0x50
+ 828 0376 05       		.uleb128 0x5
+ 829 0377 03       		.byte	0x3
+ 830 0378 18000000 		.4byte	.LC5
+ 831 037c 00       		.byte	0
+ 832 037d 0E       		.uleb128 0xe
+ 833 037e E2000000 		.4byte	.LVL35
+ 834 0382 F1050000 		.4byte	0x5f1
+ 835 0386 A6030000 		.4byte	0x3a6
+ 836 038a 0C       		.uleb128 0xc
+ 837 038b 01       		.uleb128 0x1
+ 838 038c 50       		.byte	0x50
+ 839 038d 01       		.uleb128 0x1
+ 840 038e 3F       		.byte	0x3f
+ 841 038f 0C       		.uleb128 0xc
+ 842 0390 01       		.uleb128 0x1
+ 843 0391 51       		.byte	0x51
+ 844 0392 01       		.uleb128 0x1
+ 845 0393 30       		.byte	0x30
+ 846 0394 0C       		.uleb128 0xc
+ 847 0395 01       		.uleb128 0x1
+ 848 0396 52       		.byte	0x52
+ 849 0397 01       		.uleb128 0x1
+ 850 0398 49       		.byte	0x49
+ 851 0399 0C       		.uleb128 0xc
+ 852 039a 01       		.uleb128 0x1
+ 853 039b 53       		.byte	0x53
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 18
+
+
+ 854 039c 01       		.uleb128 0x1
+ 855 039d 30       		.byte	0x30
+ 856 039e 0C       		.uleb128 0xc
+ 857 039f 02       		.uleb128 0x2
+ 858 03a0 7D       		.byte	0x7d
+ 859 03a1 00       		.sleb128 0
+ 860 03a2 02       		.uleb128 0x2
+ 861 03a3 74       		.byte	0x74
+ 862 03a4 00       		.sleb128 0
+ 863 03a5 00       		.byte	0
+ 864 03a6 0E       		.uleb128 0xe
+ 865 03a7 F0000000 		.4byte	.LVL36
+ 866 03ab F1050000 		.4byte	0x5f1
+ 867 03af CF030000 		.4byte	0x3cf
+ 868 03b3 0C       		.uleb128 0xc
+ 869 03b4 01       		.uleb128 0x1
+ 870 03b5 50       		.byte	0x50
+ 871 03b6 01       		.uleb128 0x1
+ 872 03b7 3F       		.byte	0x3f
+ 873 03b8 0C       		.uleb128 0xc
+ 874 03b9 01       		.uleb128 0x1
+ 875 03ba 51       		.byte	0x51
+ 876 03bb 01       		.uleb128 0x1
+ 877 03bc 3B       		.byte	0x3b
+ 878 03bd 0C       		.uleb128 0xc
+ 879 03be 01       		.uleb128 0x1
+ 880 03bf 52       		.byte	0x52
+ 881 03c0 01       		.uleb128 0x1
+ 882 03c1 49       		.byte	0x49
+ 883 03c2 0C       		.uleb128 0xc
+ 884 03c3 01       		.uleb128 0x1
+ 885 03c4 53       		.byte	0x53
+ 886 03c5 01       		.uleb128 0x1
+ 887 03c6 3B       		.byte	0x3b
+ 888 03c7 0C       		.uleb128 0xc
+ 889 03c8 02       		.uleb128 0x2
+ 890 03c9 7D       		.byte	0x7d
+ 891 03ca 00       		.sleb128 0
+ 892 03cb 02       		.uleb128 0x2
+ 893 03cc 74       		.byte	0x74
+ 894 03cd 00       		.sleb128 0
+ 895 03ce 00       		.byte	0
+ 896 03cf 0E       		.uleb128 0xe
+ 897 03d0 FE000000 		.4byte	.LVL37
+ 898 03d4 F1050000 		.4byte	0x5f1
+ 899 03d8 F8030000 		.4byte	0x3f8
+ 900 03dc 0C       		.uleb128 0xc
+ 901 03dd 01       		.uleb128 0x1
+ 902 03de 50       		.byte	0x50
+ 903 03df 01       		.uleb128 0x1
+ 904 03e0 3F       		.byte	0x3f
+ 905 03e1 0C       		.uleb128 0xc
+ 906 03e2 01       		.uleb128 0x1
+ 907 03e3 51       		.byte	0x51
+ 908 03e4 01       		.uleb128 0x1
+ 909 03e5 46       		.byte	0x46
+ 910 03e6 0C       		.uleb128 0xc
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 19
+
+
+ 911 03e7 01       		.uleb128 0x1
+ 912 03e8 52       		.byte	0x52
+ 913 03e9 01       		.uleb128 0x1
+ 914 03ea 49       		.byte	0x49
+ 915 03eb 0C       		.uleb128 0xc
+ 916 03ec 01       		.uleb128 0x1
+ 917 03ed 53       		.byte	0x53
+ 918 03ee 01       		.uleb128 0x1
+ 919 03ef 46       		.byte	0x46
+ 920 03f0 0C       		.uleb128 0xc
+ 921 03f1 02       		.uleb128 0x2
+ 922 03f2 7D       		.byte	0x7d
+ 923 03f3 00       		.sleb128 0
+ 924 03f4 02       		.uleb128 0x2
+ 925 03f5 74       		.byte	0x74
+ 926 03f6 00       		.sleb128 0
+ 927 03f7 00       		.byte	0
+ 928 03f8 0E       		.uleb128 0xe
+ 929 03f9 0C010000 		.4byte	.LVL38
+ 930 03fd F1050000 		.4byte	0x5f1
+ 931 0401 23040000 		.4byte	0x423
+ 932 0405 0C       		.uleb128 0xc
+ 933 0406 01       		.uleb128 0x1
+ 934 0407 50       		.byte	0x50
+ 935 0408 01       		.uleb128 0x1
+ 936 0409 3F       		.byte	0x3f
+ 937 040a 0C       		.uleb128 0xc
+ 938 040b 01       		.uleb128 0x1
+ 939 040c 51       		.byte	0x51
+ 940 040d 02       		.uleb128 0x2
+ 941 040e 08       		.byte	0x8
+ 942 040f 20       		.byte	0x20
+ 943 0410 0C       		.uleb128 0xc
+ 944 0411 01       		.uleb128 0x1
+ 945 0412 52       		.byte	0x52
+ 946 0413 01       		.uleb128 0x1
+ 947 0414 49       		.byte	0x49
+ 948 0415 0C       		.uleb128 0xc
+ 949 0416 01       		.uleb128 0x1
+ 950 0417 53       		.byte	0x53
+ 951 0418 02       		.uleb128 0x2
+ 952 0419 08       		.byte	0x8
+ 953 041a 20       		.byte	0x20
+ 954 041b 0C       		.uleb128 0xc
+ 955 041c 02       		.uleb128 0x2
+ 956 041d 7D       		.byte	0x7d
+ 957 041e 00       		.sleb128 0
+ 958 041f 02       		.uleb128 0x2
+ 959 0420 74       		.byte	0x74
+ 960 0421 00       		.sleb128 0
+ 961 0422 00       		.byte	0
+ 962 0423 0E       		.uleb128 0xe
+ 963 0424 1A010000 		.4byte	.LVL39
+ 964 0428 F1050000 		.4byte	0x5f1
+ 965 042c 4E040000 		.4byte	0x44e
+ 966 0430 0C       		.uleb128 0xc
+ 967 0431 01       		.uleb128 0x1
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 20
+
+
+ 968 0432 50       		.byte	0x50
+ 969 0433 01       		.uleb128 0x1
+ 970 0434 3F       		.byte	0x3f
+ 971 0435 0C       		.uleb128 0xc
+ 972 0436 01       		.uleb128 0x1
+ 973 0437 51       		.byte	0x51
+ 974 0438 02       		.uleb128 0x2
+ 975 0439 08       		.byte	0x8
+ 976 043a 2B       		.byte	0x2b
+ 977 043b 0C       		.uleb128 0xc
+ 978 043c 01       		.uleb128 0x1
+ 979 043d 52       		.byte	0x52
+ 980 043e 01       		.uleb128 0x1
+ 981 043f 49       		.byte	0x49
+ 982 0440 0C       		.uleb128 0xc
+ 983 0441 01       		.uleb128 0x1
+ 984 0442 53       		.byte	0x53
+ 985 0443 02       		.uleb128 0x2
+ 986 0444 08       		.byte	0x8
+ 987 0445 2B       		.byte	0x2b
+ 988 0446 0C       		.uleb128 0xc
+ 989 0447 02       		.uleb128 0x2
+ 990 0448 7D       		.byte	0x7d
+ 991 0449 00       		.sleb128 0
+ 992 044a 02       		.uleb128 0x2
+ 993 044b 74       		.byte	0x74
+ 994 044c 00       		.sleb128 0
+ 995 044d 00       		.byte	0
+ 996 044e 0E       		.uleb128 0xe
+ 997 044f 28010000 		.4byte	.LVL40
+ 998 0453 F1050000 		.4byte	0x5f1
+ 999 0457 7A040000 		.4byte	0x47a
+ 1000 045b 0C       		.uleb128 0xc
+ 1001 045c 01       		.uleb128 0x1
+ 1002 045d 50       		.byte	0x50
+ 1003 045e 01       		.uleb128 0x1
+ 1004 045f 30       		.byte	0x30
+ 1005 0460 0C       		.uleb128 0xc
+ 1006 0461 01       		.uleb128 0x1
+ 1007 0462 51       		.byte	0x51
+ 1008 0463 02       		.uleb128 0x2
+ 1009 0464 08       		.byte	0x8
+ 1010 0465 35       		.byte	0x35
+ 1011 0466 0C       		.uleb128 0xc
+ 1012 0467 01       		.uleb128 0x1
+ 1013 0468 52       		.byte	0x52
+ 1014 0469 02       		.uleb128 0x2
+ 1015 046a 08       		.byte	0x8
+ 1016 046b 7F       		.byte	0x7f
+ 1017 046c 0C       		.uleb128 0xc
+ 1018 046d 01       		.uleb128 0x1
+ 1019 046e 53       		.byte	0x53
+ 1020 046f 02       		.uleb128 0x2
+ 1021 0470 08       		.byte	0x8
+ 1022 0471 35       		.byte	0x35
+ 1023 0472 0C       		.uleb128 0xc
+ 1024 0473 02       		.uleb128 0x2
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 21
+
+
+ 1025 0474 7D       		.byte	0x7d
+ 1026 0475 00       		.sleb128 0
+ 1027 0476 02       		.uleb128 0x2
+ 1028 0477 74       		.byte	0x74
+ 1029 0478 00       		.sleb128 0
+ 1030 0479 00       		.byte	0
+ 1031 047a 0E       		.uleb128 0xe
+ 1032 047b 36010000 		.4byte	.LVL41
+ 1033 047f F1050000 		.4byte	0x5f1
+ 1034 0483 A4040000 		.4byte	0x4a4
+ 1035 0487 0C       		.uleb128 0xc
+ 1036 0488 01       		.uleb128 0x1
+ 1037 0489 50       		.byte	0x50
+ 1038 048a 01       		.uleb128 0x1
+ 1039 048b 49       		.byte	0x49
+ 1040 048c 0C       		.uleb128 0xc
+ 1041 048d 01       		.uleb128 0x1
+ 1042 048e 51       		.byte	0x51
+ 1043 048f 02       		.uleb128 0x2
+ 1044 0490 08       		.byte	0x8
+ 1045 0491 35       		.byte	0x35
+ 1046 0492 0C       		.uleb128 0xc
+ 1047 0493 01       		.uleb128 0x1
+ 1048 0494 52       		.byte	0x52
+ 1049 0495 01       		.uleb128 0x1
+ 1050 0496 49       		.byte	0x49
+ 1051 0497 0C       		.uleb128 0xc
+ 1052 0498 01       		.uleb128 0x1
+ 1053 0499 53       		.byte	0x53
+ 1054 049a 01       		.uleb128 0x1
+ 1055 049b 30       		.byte	0x30
+ 1056 049c 0C       		.uleb128 0xc
+ 1057 049d 02       		.uleb128 0x2
+ 1058 049e 7D       		.byte	0x7d
+ 1059 049f 00       		.sleb128 0
+ 1060 04a0 02       		.uleb128 0x2
+ 1061 04a1 74       		.byte	0x74
+ 1062 04a2 00       		.sleb128 0
+ 1063 04a3 00       		.byte	0
+ 1064 04a4 0E       		.uleb128 0xe
+ 1065 04a5 82010000 		.4byte	.LVL49
+ 1066 04a9 DB050000 		.4byte	0x5db
+ 1067 04ad BD040000 		.4byte	0x4bd
+ 1068 04b1 0C       		.uleb128 0xc
+ 1069 04b2 01       		.uleb128 0x1
+ 1070 04b3 50       		.byte	0x50
+ 1071 04b4 01       		.uleb128 0x1
+ 1072 04b5 49       		.byte	0x49
+ 1073 04b6 0C       		.uleb128 0xc
+ 1074 04b7 01       		.uleb128 0x1
+ 1075 04b8 51       		.byte	0x51
+ 1076 04b9 02       		.uleb128 0x2
+ 1077 04ba 08       		.byte	0x8
+ 1078 04bb 39       		.byte	0x39
+ 1079 04bc 00       		.byte	0
+ 1080 04bd 0E       		.uleb128 0xe
+ 1081 04be 8A010000 		.4byte	.LVL50
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 22
+
+
+ 1082 04c2 E6050000 		.4byte	0x5e6
+ 1083 04c6 D1040000 		.4byte	0x4d1
+ 1084 04ca 0C       		.uleb128 0xc
+ 1085 04cb 01       		.uleb128 0x1
+ 1086 04cc 50       		.byte	0x50
+ 1087 04cd 02       		.uleb128 0x2
+ 1088 04ce 91       		.byte	0x91
+ 1089 04cf 60       		.sleb128 -32
+ 1090 04d0 00       		.byte	0
+ 1091 04d1 0E       		.uleb128 0xe
+ 1092 04d2 90010000 		.4byte	.LVL51
+ 1093 04d6 E6050000 		.4byte	0x5e6
+ 1094 04da E8040000 		.4byte	0x4e8
+ 1095 04de 0C       		.uleb128 0xc
+ 1096 04df 01       		.uleb128 0x1
+ 1097 04e0 50       		.byte	0x50
+ 1098 04e1 05       		.uleb128 0x5
+ 1099 04e2 03       		.byte	0x3
+ 1100 04e3 1C000000 		.4byte	.LC6
+ 1101 04e7 00       		.byte	0
+ 1102 04e8 0E       		.uleb128 0xe
+ 1103 04e9 AC010000 		.4byte	.LVL54
+ 1104 04ed FC050000 		.4byte	0x5fc
+ 1105 04f1 FB040000 		.4byte	0x4fb
+ 1106 04f5 0C       		.uleb128 0xc
+ 1107 04f6 01       		.uleb128 0x1
+ 1108 04f7 50       		.byte	0x50
+ 1109 04f8 01       		.uleb128 0x1
+ 1110 04f9 3A       		.byte	0x3a
+ 1111 04fa 00       		.byte	0
+ 1112 04fb 0D       		.uleb128 0xd
+ 1113 04fc B0010000 		.4byte	.LVL55
+ 1114 0500 07060000 		.4byte	0x607
+ 1115 0504 00       		.byte	0
+ 1116 0505 0F       		.uleb128 0xf
+ 1117 0506 A7000000 		.4byte	0xa7
+ 1118 050a 15050000 		.4byte	0x515
+ 1119 050e 10       		.uleb128 0x10
+ 1120 050f B5000000 		.4byte	0xb5
+ 1121 0513 0F       		.byte	0xf
+ 1122 0514 00       		.byte	0
+ 1123 0515 0F       		.uleb128 0xf
+ 1124 0516 68000000 		.4byte	0x68
+ 1125 051a 25050000 		.4byte	0x525
+ 1126 051e 10       		.uleb128 0x10
+ 1127 051f B5000000 		.4byte	0xb5
+ 1128 0523 7F       		.byte	0x7f
+ 1129 0524 00       		.byte	0
+ 1130 0525 11       		.uleb128 0x11
+ 1131 0526 5A010000 		.4byte	.LASF45
+ 1132 052a 0B       		.byte	0xb
+ 1133 052b 1207     		.2byte	0x712
+ 1134 052d 31050000 		.4byte	0x531
+ 1135 0531 12       		.uleb128 0x12
+ 1136 0532 76000000 		.4byte	0x76
+ 1137 0536 13       		.uleb128 0x13
+ 1138 0537 28010000 		.4byte	.LASF21
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 23
+
+
+ 1139 053b 28010000 		.4byte	.LASF21
+ 1140 053f 05       		.byte	0x5
+ 1141 0540 3F       		.byte	0x3f
+ 1142 0541 13       		.uleb128 0x13
+ 1143 0542 BF010000 		.4byte	.LASF22
+ 1144 0546 BF010000 		.4byte	.LASF22
+ 1145 054a 06       		.byte	0x6
+ 1146 054b 93       		.byte	0x93
+ 1147 054c 13       		.uleb128 0x13
+ 1148 054d 7B020000 		.4byte	.LASF23
+ 1149 0551 7B020000 		.4byte	.LASF23
+ 1150 0555 07       		.byte	0x7
+ 1151 0556 33       		.byte	0x33
+ 1152 0557 13       		.uleb128 0x13
+ 1153 0558 E4010000 		.4byte	.LASF24
+ 1154 055c E4010000 		.4byte	.LASF24
+ 1155 0560 08       		.byte	0x8
+ 1156 0561 3A       		.byte	0x3a
+ 1157 0562 13       		.uleb128 0x13
+ 1158 0563 CB020000 		.4byte	.LASF25
+ 1159 0567 CB020000 		.4byte	.LASF25
+ 1160 056b 05       		.byte	0x5
+ 1161 056c 34       		.byte	0x34
+ 1162 056d 13       		.uleb128 0x13
+ 1163 056e EE010000 		.4byte	.LASF26
+ 1164 0572 EE010000 		.4byte	.LASF26
+ 1165 0576 05       		.byte	0x5
+ 1166 0577 4E       		.byte	0x4e
+ 1167 0578 13       		.uleb128 0x13
+ 1168 0579 F0020000 		.4byte	.LASF27
+ 1169 057d F0020000 		.4byte	.LASF27
+ 1170 0581 05       		.byte	0x5
+ 1171 0582 43       		.byte	0x43
+ 1172 0583 13       		.uleb128 0x13
+ 1173 0584 00000000 		.4byte	.LASF28
+ 1174 0588 00000000 		.4byte	.LASF28
+ 1175 058c 05       		.byte	0x5
+ 1176 058d 42       		.byte	0x42
+ 1177 058e 13       		.uleb128 0x13
+ 1178 058f 57000000 		.4byte	.LASF29
+ 1179 0593 57000000 		.4byte	.LASF29
+ 1180 0597 05       		.byte	0x5
+ 1181 0598 36       		.byte	0x36
+ 1182 0599 13       		.uleb128 0x13
+ 1183 059a 17010000 		.4byte	.LASF30
+ 1184 059e 17010000 		.4byte	.LASF30
+ 1185 05a2 08       		.byte	0x8
+ 1186 05a3 3D       		.byte	0x3d
+ 1187 05a4 13       		.uleb128 0x13
+ 1188 05a5 36010000 		.4byte	.LASF31
+ 1189 05a9 36010000 		.4byte	.LASF31
+ 1190 05ad 08       		.byte	0x8
+ 1191 05ae 3F       		.byte	0x3f
+ 1192 05af 13       		.uleb128 0x13
+ 1193 05b0 6B000000 		.4byte	.LASF32
+ 1194 05b4 6B000000 		.4byte	.LASF32
+ 1195 05b8 08       		.byte	0x8
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 24
+
+
+ 1196 05b9 42       		.byte	0x42
+ 1197 05ba 13       		.uleb128 0x13
+ 1198 05bb 4A010000 		.4byte	.LASF33
+ 1199 05bf 4A010000 		.4byte	.LASF33
+ 1200 05c3 08       		.byte	0x8
+ 1201 05c4 3E       		.byte	0x3e
+ 1202 05c5 13       		.uleb128 0x13
+ 1203 05c6 21000000 		.4byte	.LASF34
+ 1204 05ca 21000000 		.4byte	.LASF34
+ 1205 05ce 08       		.byte	0x8
+ 1206 05cf 47       		.byte	0x47
+ 1207 05d0 13       		.uleb128 0x13
+ 1208 05d1 01030000 		.4byte	.LASF35
+ 1209 05d5 01030000 		.4byte	.LASF35
+ 1210 05d9 09       		.byte	0x9
+ 1211 05da E7       		.byte	0xe7
+ 1212 05db 13       		.uleb128 0x13
+ 1213 05dc 67010000 		.4byte	.LASF36
+ 1214 05e0 67010000 		.4byte	.LASF36
+ 1215 05e4 05       		.byte	0x5
+ 1216 05e5 41       		.byte	0x41
+ 1217 05e6 13       		.uleb128 0x13
+ 1218 05e7 91020000 		.4byte	.LASF37
+ 1219 05eb 91020000 		.4byte	.LASF37
+ 1220 05ef 05       		.byte	0x5
+ 1221 05f0 48       		.byte	0x48
+ 1222 05f1 13       		.uleb128 0x13
+ 1223 05f2 6E020000 		.4byte	.LASF38
+ 1224 05f6 6E020000 		.4byte	.LASF38
+ 1225 05fa 05       		.byte	0x5
+ 1226 05fb 40       		.byte	0x40
+ 1227 05fc 13       		.uleb128 0x13
+ 1228 05fd 09030000 		.4byte	.LASF39
+ 1229 0601 09030000 		.4byte	.LASF39
+ 1230 0605 0A       		.byte	0xa
+ 1231 0606 76       		.byte	0x76
+ 1232 0607 13       		.uleb128 0x13
+ 1233 0608 8C010000 		.4byte	.LASF40
+ 1234 060c 8C010000 		.4byte	.LASF40
+ 1235 0610 05       		.byte	0x5
+ 1236 0611 35       		.byte	0x35
+ 1237 0612 00       		.byte	0
+ 1238              		.section	.debug_abbrev,"",%progbits
+ 1239              	.Ldebug_abbrev0:
+ 1240 0000 01       		.uleb128 0x1
+ 1241 0001 11       		.uleb128 0x11
+ 1242 0002 01       		.byte	0x1
+ 1243 0003 25       		.uleb128 0x25
+ 1244 0004 0E       		.uleb128 0xe
+ 1245 0005 13       		.uleb128 0x13
+ 1246 0006 0B       		.uleb128 0xb
+ 1247 0007 03       		.uleb128 0x3
+ 1248 0008 0E       		.uleb128 0xe
+ 1249 0009 1B       		.uleb128 0x1b
+ 1250 000a 0E       		.uleb128 0xe
+ 1251 000b 55       		.uleb128 0x55
+ 1252 000c 17       		.uleb128 0x17
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 25
+
+
+ 1253 000d 11       		.uleb128 0x11
+ 1254 000e 01       		.uleb128 0x1
+ 1255 000f 10       		.uleb128 0x10
+ 1256 0010 17       		.uleb128 0x17
+ 1257 0011 00       		.byte	0
+ 1258 0012 00       		.byte	0
+ 1259 0013 02       		.uleb128 0x2
+ 1260 0014 24       		.uleb128 0x24
+ 1261 0015 00       		.byte	0
+ 1262 0016 0B       		.uleb128 0xb
+ 1263 0017 0B       		.uleb128 0xb
+ 1264 0018 3E       		.uleb128 0x3e
+ 1265 0019 0B       		.uleb128 0xb
+ 1266 001a 03       		.uleb128 0x3
+ 1267 001b 0E       		.uleb128 0xe
+ 1268 001c 00       		.byte	0
+ 1269 001d 00       		.byte	0
+ 1270 001e 03       		.uleb128 0x3
+ 1271 001f 16       		.uleb128 0x16
+ 1272 0020 00       		.byte	0
+ 1273 0021 03       		.uleb128 0x3
+ 1274 0022 0E       		.uleb128 0xe
+ 1275 0023 3A       		.uleb128 0x3a
+ 1276 0024 0B       		.uleb128 0xb
+ 1277 0025 3B       		.uleb128 0x3b
+ 1278 0026 0B       		.uleb128 0xb
+ 1279 0027 49       		.uleb128 0x49
+ 1280 0028 13       		.uleb128 0x13
+ 1281 0029 00       		.byte	0
+ 1282 002a 00       		.byte	0
+ 1283 002b 04       		.uleb128 0x4
+ 1284 002c 24       		.uleb128 0x24
+ 1285 002d 00       		.byte	0
+ 1286 002e 0B       		.uleb128 0xb
+ 1287 002f 0B       		.uleb128 0xb
+ 1288 0030 3E       		.uleb128 0x3e
+ 1289 0031 0B       		.uleb128 0xb
+ 1290 0032 03       		.uleb128 0x3
+ 1291 0033 08       		.uleb128 0x8
+ 1292 0034 00       		.byte	0
+ 1293 0035 00       		.byte	0
+ 1294 0036 05       		.uleb128 0x5
+ 1295 0037 16       		.uleb128 0x16
+ 1296 0038 00       		.byte	0
+ 1297 0039 03       		.uleb128 0x3
+ 1298 003a 0E       		.uleb128 0xe
+ 1299 003b 3A       		.uleb128 0x3a
+ 1300 003c 0B       		.uleb128 0xb
+ 1301 003d 3B       		.uleb128 0x3b
+ 1302 003e 05       		.uleb128 0x5
+ 1303 003f 49       		.uleb128 0x49
+ 1304 0040 13       		.uleb128 0x13
+ 1305 0041 00       		.byte	0
+ 1306 0042 00       		.byte	0
+ 1307 0043 06       		.uleb128 0x6
+ 1308 0044 2E       		.uleb128 0x2e
+ 1309 0045 01       		.byte	0x1
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 26
+
+
+ 1310 0046 3F       		.uleb128 0x3f
+ 1311 0047 19       		.uleb128 0x19
+ 1312 0048 03       		.uleb128 0x3
+ 1313 0049 0E       		.uleb128 0xe
+ 1314 004a 3A       		.uleb128 0x3a
+ 1315 004b 0B       		.uleb128 0xb
+ 1316 004c 3B       		.uleb128 0x3b
+ 1317 004d 0B       		.uleb128 0xb
+ 1318 004e 49       		.uleb128 0x49
+ 1319 004f 13       		.uleb128 0x13
+ 1320 0050 8701     		.uleb128 0x87
+ 1321 0052 19       		.uleb128 0x19
+ 1322 0053 11       		.uleb128 0x11
+ 1323 0054 01       		.uleb128 0x1
+ 1324 0055 12       		.uleb128 0x12
+ 1325 0056 06       		.uleb128 0x6
+ 1326 0057 40       		.uleb128 0x40
+ 1327 0058 18       		.uleb128 0x18
+ 1328 0059 9642     		.uleb128 0x2116
+ 1329 005b 19       		.uleb128 0x19
+ 1330 005c 01       		.uleb128 0x1
+ 1331 005d 13       		.uleb128 0x13
+ 1332 005e 00       		.byte	0
+ 1333 005f 00       		.byte	0
+ 1334 0060 07       		.uleb128 0x7
+ 1335 0061 34       		.uleb128 0x34
+ 1336 0062 00       		.byte	0
+ 1337 0063 03       		.uleb128 0x3
+ 1338 0064 0E       		.uleb128 0xe
+ 1339 0065 3A       		.uleb128 0x3a
+ 1340 0066 0B       		.uleb128 0xb
+ 1341 0067 3B       		.uleb128 0x3b
+ 1342 0068 0B       		.uleb128 0xb
+ 1343 0069 49       		.uleb128 0x49
+ 1344 006a 13       		.uleb128 0x13
+ 1345 006b 02       		.uleb128 0x2
+ 1346 006c 17       		.uleb128 0x17
+ 1347 006d 00       		.byte	0
+ 1348 006e 00       		.byte	0
+ 1349 006f 08       		.uleb128 0x8
+ 1350 0070 34       		.uleb128 0x34
+ 1351 0071 00       		.byte	0
+ 1352 0072 03       		.uleb128 0x3
+ 1353 0073 08       		.uleb128 0x8
+ 1354 0074 3A       		.uleb128 0x3a
+ 1355 0075 0B       		.uleb128 0xb
+ 1356 0076 3B       		.uleb128 0x3b
+ 1357 0077 0B       		.uleb128 0xb
+ 1358 0078 49       		.uleb128 0x49
+ 1359 0079 13       		.uleb128 0x13
+ 1360 007a 02       		.uleb128 0x2
+ 1361 007b 17       		.uleb128 0x17
+ 1362 007c 00       		.byte	0
+ 1363 007d 00       		.byte	0
+ 1364 007e 09       		.uleb128 0x9
+ 1365 007f 34       		.uleb128 0x34
+ 1366 0080 00       		.byte	0
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 27
+
+
+ 1367 0081 03       		.uleb128 0x3
+ 1368 0082 08       		.uleb128 0x8
+ 1369 0083 3A       		.uleb128 0x3a
+ 1370 0084 0B       		.uleb128 0xb
+ 1371 0085 3B       		.uleb128 0x3b
+ 1372 0086 0B       		.uleb128 0xb
+ 1373 0087 49       		.uleb128 0x49
+ 1374 0088 13       		.uleb128 0x13
+ 1375 0089 02       		.uleb128 0x2
+ 1376 008a 18       		.uleb128 0x18
+ 1377 008b 00       		.byte	0
+ 1378 008c 00       		.byte	0
+ 1379 008d 0A       		.uleb128 0xa
+ 1380 008e 0B       		.uleb128 0xb
+ 1381 008f 01       		.byte	0x1
+ 1382 0090 11       		.uleb128 0x11
+ 1383 0091 01       		.uleb128 0x1
+ 1384 0092 12       		.uleb128 0x12
+ 1385 0093 06       		.uleb128 0x6
+ 1386 0094 01       		.uleb128 0x1
+ 1387 0095 13       		.uleb128 0x13
+ 1388 0096 00       		.byte	0
+ 1389 0097 00       		.byte	0
+ 1390 0098 0B       		.uleb128 0xb
+ 1391 0099 898201   		.uleb128 0x4109
+ 1392 009c 01       		.byte	0x1
+ 1393 009d 11       		.uleb128 0x11
+ 1394 009e 01       		.uleb128 0x1
+ 1395 009f 31       		.uleb128 0x31
+ 1396 00a0 13       		.uleb128 0x13
+ 1397 00a1 00       		.byte	0
+ 1398 00a2 00       		.byte	0
+ 1399 00a3 0C       		.uleb128 0xc
+ 1400 00a4 8A8201   		.uleb128 0x410a
+ 1401 00a7 00       		.byte	0
+ 1402 00a8 02       		.uleb128 0x2
+ 1403 00a9 18       		.uleb128 0x18
+ 1404 00aa 9142     		.uleb128 0x2111
+ 1405 00ac 18       		.uleb128 0x18
+ 1406 00ad 00       		.byte	0
+ 1407 00ae 00       		.byte	0
+ 1408 00af 0D       		.uleb128 0xd
+ 1409 00b0 898201   		.uleb128 0x4109
+ 1410 00b3 00       		.byte	0
+ 1411 00b4 11       		.uleb128 0x11
+ 1412 00b5 01       		.uleb128 0x1
+ 1413 00b6 31       		.uleb128 0x31
+ 1414 00b7 13       		.uleb128 0x13
+ 1415 00b8 00       		.byte	0
+ 1416 00b9 00       		.byte	0
+ 1417 00ba 0E       		.uleb128 0xe
+ 1418 00bb 898201   		.uleb128 0x4109
+ 1419 00be 01       		.byte	0x1
+ 1420 00bf 11       		.uleb128 0x11
+ 1421 00c0 01       		.uleb128 0x1
+ 1422 00c1 31       		.uleb128 0x31
+ 1423 00c2 13       		.uleb128 0x13
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 28
+
+
+ 1424 00c3 01       		.uleb128 0x1
+ 1425 00c4 13       		.uleb128 0x13
+ 1426 00c5 00       		.byte	0
+ 1427 00c6 00       		.byte	0
+ 1428 00c7 0F       		.uleb128 0xf
+ 1429 00c8 01       		.uleb128 0x1
+ 1430 00c9 01       		.byte	0x1
+ 1431 00ca 49       		.uleb128 0x49
+ 1432 00cb 13       		.uleb128 0x13
+ 1433 00cc 01       		.uleb128 0x1
+ 1434 00cd 13       		.uleb128 0x13
+ 1435 00ce 00       		.byte	0
+ 1436 00cf 00       		.byte	0
+ 1437 00d0 10       		.uleb128 0x10
+ 1438 00d1 21       		.uleb128 0x21
+ 1439 00d2 00       		.byte	0
+ 1440 00d3 49       		.uleb128 0x49
+ 1441 00d4 13       		.uleb128 0x13
+ 1442 00d5 2F       		.uleb128 0x2f
+ 1443 00d6 0B       		.uleb128 0xb
+ 1444 00d7 00       		.byte	0
+ 1445 00d8 00       		.byte	0
+ 1446 00d9 11       		.uleb128 0x11
+ 1447 00da 34       		.uleb128 0x34
+ 1448 00db 00       		.byte	0
+ 1449 00dc 03       		.uleb128 0x3
+ 1450 00dd 0E       		.uleb128 0xe
+ 1451 00de 3A       		.uleb128 0x3a
+ 1452 00df 0B       		.uleb128 0xb
+ 1453 00e0 3B       		.uleb128 0x3b
+ 1454 00e1 05       		.uleb128 0x5
+ 1455 00e2 49       		.uleb128 0x49
+ 1456 00e3 13       		.uleb128 0x13
+ 1457 00e4 3F       		.uleb128 0x3f
+ 1458 00e5 19       		.uleb128 0x19
+ 1459 00e6 3C       		.uleb128 0x3c
+ 1460 00e7 19       		.uleb128 0x19
+ 1461 00e8 00       		.byte	0
+ 1462 00e9 00       		.byte	0
+ 1463 00ea 12       		.uleb128 0x12
+ 1464 00eb 35       		.uleb128 0x35
+ 1465 00ec 00       		.byte	0
+ 1466 00ed 49       		.uleb128 0x49
+ 1467 00ee 13       		.uleb128 0x13
+ 1468 00ef 00       		.byte	0
+ 1469 00f0 00       		.byte	0
+ 1470 00f1 13       		.uleb128 0x13
+ 1471 00f2 2E       		.uleb128 0x2e
+ 1472 00f3 00       		.byte	0
+ 1473 00f4 3F       		.uleb128 0x3f
+ 1474 00f5 19       		.uleb128 0x19
+ 1475 00f6 3C       		.uleb128 0x3c
+ 1476 00f7 19       		.uleb128 0x19
+ 1477 00f8 6E       		.uleb128 0x6e
+ 1478 00f9 0E       		.uleb128 0xe
+ 1479 00fa 03       		.uleb128 0x3
+ 1480 00fb 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 29
+
+
+ 1481 00fc 3A       		.uleb128 0x3a
+ 1482 00fd 0B       		.uleb128 0xb
+ 1483 00fe 3B       		.uleb128 0x3b
+ 1484 00ff 0B       		.uleb128 0xb
+ 1485 0100 00       		.byte	0
+ 1486 0101 00       		.byte	0
+ 1487 0102 00       		.byte	0
+ 1488              		.section	.debug_loc,"",%progbits
+ 1489              	.Ldebug_loc0:
+ 1490              	.LLST0:
+ 1491 0000 68000000 		.4byte	.LVL18
+ 1492 0004 6B000000 		.4byte	.LVL19-1
+ 1493 0008 0100     		.2byte	0x1
+ 1494 000a 50       		.byte	0x50
+ 1495 000b 6B000000 		.4byte	.LVL19-1
+ 1496 000f 5E010000 		.4byte	.LVL45
+ 1497 0013 0100     		.2byte	0x1
+ 1498 0015 55       		.byte	0x55
+ 1499 0016 00000000 		.4byte	0
+ 1500 001a 00000000 		.4byte	0
+ 1501              	.LLST1:
+ 1502 001e 72000000 		.4byte	.LVL20
+ 1503 0022 75000000 		.4byte	.LVL21-1
+ 1504 0026 0700     		.2byte	0x7
+ 1505 0028 70       		.byte	0x70
+ 1506 0029 00       		.sleb128 0
+ 1507 002a 40       		.byte	0x40
+ 1508 002b 24       		.byte	0x24
+ 1509 002c 40       		.byte	0x40
+ 1510 002d 26       		.byte	0x26
+ 1511 002e 9F       		.byte	0x9f
+ 1512 002f 00000000 		.4byte	0
+ 1513 0033 00000000 		.4byte	0
+ 1514              	.LLST2:
+ 1515 0037 7A000000 		.4byte	.LVL22
+ 1516 003b 7D000000 		.4byte	.LVL23-1
+ 1517 003f 0100     		.2byte	0x1
+ 1518 0041 50       		.byte	0x50
+ 1519 0042 00000000 		.4byte	0
+ 1520 0046 00000000 		.4byte	0
+ 1521              	.LLST3:
+ 1522 004a 14000000 		.4byte	.LVL3
+ 1523 004e 54000000 		.4byte	.LVL13
+ 1524 0052 0600     		.2byte	0x6
+ 1525 0054 9E       		.byte	0x9e
+ 1526 0055 04       		.uleb128 0x4
+ 1527 0056 00000000 		.4byte	0
+ 1528 005a 52010000 		.4byte	.LVL42
+ 1529 005e 55010000 		.4byte	.LVL43-1
+ 1530 0062 0100     		.2byte	0x1
+ 1531 0064 50       		.byte	0x50
+ 1532 0065 00000000 		.4byte	0
+ 1533 0069 00000000 		.4byte	0
+ 1534              	.LLST4:
+ 1535 006d 2C000000 		.4byte	.LVL7
+ 1536 0071 30000000 		.4byte	.LVL8
+ 1537 0075 0300     		.2byte	0x3
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 30
+
+
+ 1538 0077 08       		.byte	0x8
+ 1539 0078 7F       		.byte	0x7f
+ 1540 0079 9F       		.byte	0x9f
+ 1541 007a 30000000 		.4byte	.LVL8
+ 1542 007e 42000000 		.4byte	.LVL10
+ 1543 0082 0100     		.2byte	0x1
+ 1544 0084 53       		.byte	0x53
+ 1545 0085 00000000 		.4byte	0
+ 1546 0089 00000000 		.4byte	0
+ 1547              	.LLST5:
+ 1548 008d 44000000 		.4byte	.LVL11
+ 1549 0091 54000000 		.4byte	.LVL13
+ 1550 0095 0100     		.2byte	0x1
+ 1551 0097 53       		.byte	0x53
+ 1552 0098 00000000 		.4byte	0
+ 1553 009c 00000000 		.4byte	0
+ 1554              	.LLST6:
+ 1555 00a0 5A010000 		.4byte	.LVL44
+ 1556 00a4 5E010000 		.4byte	.LVL45
+ 1557 00a8 0300     		.2byte	0x3
+ 1558 00aa 08       		.byte	0x8
+ 1559 00ab 7F       		.byte	0x7f
+ 1560 00ac 9F       		.byte	0x9f
+ 1561 00ad 5E010000 		.4byte	.LVL45
+ 1562 00b1 70010000 		.4byte	.LVL47
+ 1563 00b5 0100     		.2byte	0x1
+ 1564 00b7 54       		.byte	0x54
+ 1565 00b8 70010000 		.4byte	.LVL47
+ 1566 00bc 76010000 		.4byte	.LVL48
+ 1567 00c0 0300     		.2byte	0x3
+ 1568 00c2 74       		.byte	0x74
+ 1569 00c3 01       		.sleb128 1
+ 1570 00c4 9F       		.byte	0x9f
+ 1571 00c5 76010000 		.4byte	.LVL48
+ 1572 00c9 D4010000 		.4byte	.LFE64
+ 1573 00cd 0100     		.2byte	0x1
+ 1574 00cf 54       		.byte	0x54
+ 1575 00d0 00000000 		.4byte	0
+ 1576 00d4 00000000 		.4byte	0
+ 1577              	.LLST7:
+ 1578 00d8 90010000 		.4byte	.LVL51
+ 1579 00dc 94010000 		.4byte	.LVL52
+ 1580 00e0 0300     		.2byte	0x3
+ 1581 00e2 08       		.byte	0x8
+ 1582 00e3 7F       		.byte	0x7f
+ 1583 00e4 9F       		.byte	0x9f
+ 1584 00e5 94010000 		.4byte	.LVL52
+ 1585 00e9 AB010000 		.4byte	.LVL54-1
+ 1586 00ed 0100     		.2byte	0x1
+ 1587 00ef 53       		.byte	0x53
+ 1588 00f0 00000000 		.4byte	0
+ 1589 00f4 00000000 		.4byte	0
+ 1590              		.section	.debug_aranges,"",%progbits
+ 1591 0000 1C000000 		.4byte	0x1c
+ 1592 0004 0200     		.2byte	0x2
+ 1593 0006 00000000 		.4byte	.Ldebug_info0
+ 1594 000a 04       		.byte	0x4
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 31
+
+
+ 1595 000b 00       		.byte	0
+ 1596 000c 0000     		.2byte	0
+ 1597 000e 0000     		.2byte	0
+ 1598 0010 00000000 		.4byte	.LFB64
+ 1599 0014 D4010000 		.4byte	.LFE64-.LFB64
+ 1600 0018 00000000 		.4byte	0
+ 1601 001c 00000000 		.4byte	0
+ 1602              		.section	.debug_ranges,"",%progbits
+ 1603              	.Ldebug_ranges0:
+ 1604 0000 00000000 		.4byte	.LFB64
+ 1605 0004 D4010000 		.4byte	.LFE64
+ 1606 0008 00000000 		.4byte	0
+ 1607 000c 00000000 		.4byte	0
+ 1608              		.section	.debug_line,"",%progbits
+ 1609              	.Ldebug_line0:
+ 1610 0000 96020000 		.section	.debug_str,"MS",%progbits,1
+ 1610      02001302 
+ 1610      00000201 
+ 1610      FB0E0D00 
+ 1610      01010101 
+ 1611              	.LASF28:
+ 1612 0000 6766785F 		.ascii	"gfx_setTextSize\000"
+ 1612      73657454 
+ 1612      65787453 
+ 1612      697A6500 
+ 1613              	.LASF18:
+ 1614 0010 656E7465 		.ascii	"entero\000"
+ 1614      726F00
+ 1615              	.LASF9:
+ 1616 0017 5F5F696E 		.ascii	"__int32_t\000"
+ 1616      7433325F 
+ 1616      7400
+ 1617              	.LASF34:
+ 1618 0021 4144435F 		.ascii	"ADC_CountsTo_mVolts\000"
+ 1618      436F756E 
+ 1618      7473546F 
+ 1618      5F6D566F 
+ 1618      6C747300 
+ 1619              	.LASF3:
+ 1620 0035 73686F72 		.ascii	"short unsigned int\000"
+ 1620      7420756E 
+ 1620      7369676E 
+ 1620      65642069 
+ 1620      6E7400
+ 1621              	.LASF14:
+ 1622 0048 646F7562 		.ascii	"double\000"
+ 1622      6C6500
+ 1623              	.LASF10:
+ 1624 004f 696E7433 		.ascii	"int32_t\000"
+ 1624      325F7400 
+ 1625              	.LASF29:
+ 1626 0057 64697370 		.ascii	"display_clear\000"
+ 1626      6C61795F 
+ 1626      636C6561 
+ 1626      7200
+ 1627              	.LASF13:
+ 1628 0065 666C6F61 		.ascii	"float\000"
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 32
+
+
+ 1628      7400
+ 1629              	.LASF32:
+ 1630 006b 4144435F 		.ascii	"ADC_GetResult32\000"
+ 1630      47657452 
+ 1630      6573756C 
+ 1630      74333200 
+ 1631              	.LASF1:
+ 1632 007b 756E7369 		.ascii	"unsigned char\000"
+ 1632      676E6564 
+ 1632      20636861 
+ 1632      7200
+ 1633              	.LASF41:
+ 1634 0089 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1634      43313120 
+ 1634      352E342E 
+ 1634      31203230 
+ 1634      31363036 
+ 1635 00bc 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1635      20726576 
+ 1635      6973696F 
+ 1635      6E203233 
+ 1635      37373135 
+ 1636 00ef 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1636      66756E63 
+ 1636      74696F6E 
+ 1636      2D736563 
+ 1636      74696F6E 
+ 1637              	.LASF30:
+ 1638 0117 4144435F 		.ascii	"ADC_StartConvert\000"
+ 1638      53746172 
+ 1638      74436F6E 
+ 1638      76657274 
+ 1638      00
+ 1639              	.LASF21:
+ 1640 0128 6766785F 		.ascii	"gfx_drawPixel\000"
+ 1640      64726177 
+ 1640      50697865 
+ 1640      6C00
+ 1641              	.LASF31:
+ 1642 0136 4144435F 		.ascii	"ADC_IsEndConversion\000"
+ 1642      4973456E 
+ 1642      64436F6E 
+ 1642      76657273 
+ 1642      696F6E00 
+ 1643              	.LASF33:
+ 1644 014a 4144435F 		.ascii	"ADC_StopConvert\000"
+ 1644      53746F70 
+ 1644      436F6E76 
+ 1644      65727400 
+ 1645              	.LASF45:
+ 1646 015a 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1646      52784275 
+ 1646      66666572 
+ 1646      00
+ 1647              	.LASF36:
+ 1648 0167 6766785F 		.ascii	"gfx_setCursor\000"
+ 1648      73657443 
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 33
+
+
+ 1648      7572736F 
+ 1648      7200
+ 1649              	.LASF5:
+ 1650 0175 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1650      20756E73 
+ 1650      69676E65 
+ 1650      6420696E 
+ 1650      7400
+ 1651              	.LASF44:
+ 1652 0187 6D61696E 		.ascii	"main\000"
+ 1652      00
+ 1653              	.LASF40:
+ 1654 018c 64697370 		.ascii	"display_update\000"
+ 1654      6C61795F 
+ 1654      75706461 
+ 1654      746500
+ 1655              	.LASF12:
+ 1656 019b 666C6F61 		.ascii	"float32\000"
+ 1656      74333200 
+ 1657              	.LASF20:
+ 1658 01a3 67726166 		.ascii	"graficaVoltaje\000"
+ 1658      69636156 
+ 1658      6F6C7461 
+ 1658      6A6500
+ 1659              	.LASF8:
+ 1660 01b2 756E7369 		.ascii	"unsigned int\000"
+ 1660      676E6564 
+ 1660      20696E74 
+ 1660      00
+ 1661              	.LASF22:
+ 1662 01bf 4932434F 		.ascii	"I2COLED_Start\000"
+ 1662      4C45445F 
+ 1662      53746172 
+ 1662      7400
+ 1663              	.LASF7:
+ 1664 01cd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1664      206C6F6E 
+ 1664      6720756E 
+ 1664      7369676E 
+ 1664      65642069 
+ 1665              	.LASF24:
+ 1666 01e4 4144435F 		.ascii	"ADC_Start\000"
+ 1666      53746172 
+ 1666      7400
+ 1667              	.LASF26:
+ 1668 01ee 6766785F 		.ascii	"gfx_setRotation\000"
+ 1668      73657452 
+ 1668      6F746174 
+ 1668      696F6E00 
+ 1669              	.LASF11:
+ 1670 01fe 696E7433 		.ascii	"int32\000"
+ 1670      3200
+ 1671              	.LASF17:
+ 1672 0204 73697A65 		.ascii	"sizetype\000"
+ 1672      74797065 
+ 1672      00
+ 1673              	.LASF43:
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 34
+
+
+ 1674 020d 433A5C55 		.ascii	"C:\\Users\\Usuario\\Documents\\PSoC Creator\\Grafic"
+ 1674      73657273 
+ 1674      5C557375 
+ 1674      6172696F 
+ 1674      5C446F63 
+ 1675 023b 6F206465 		.ascii	"o de datos adquiridos\\Design01.cydsn\000"
+ 1675      20646174 
+ 1675      6F732061 
+ 1675      64717569 
+ 1675      7269646F 
+ 1676              	.LASF6:
+ 1677 0260 6C6F6E67 		.ascii	"long long int\000"
+ 1677      206C6F6E 
+ 1677      6720696E 
+ 1677      7400
+ 1678              	.LASF38:
+ 1679 026e 6766785F 		.ascii	"gfx_drawLine\000"
+ 1679      64726177 
+ 1679      4C696E65 
+ 1679      00
+ 1680              	.LASF23:
+ 1681 027b 4F70616D 		.ascii	"Opamp_Start\000"
+ 1681      705F5374 
+ 1681      61727400 
+ 1682              	.LASF2:
+ 1683 0287 73686F72 		.ascii	"short int\000"
+ 1683      7420696E 
+ 1683      7400
+ 1684              	.LASF37:
+ 1685 0291 6766785F 		.ascii	"gfx_print\000"
+ 1685      7072696E 
+ 1685      7400
+ 1686              	.LASF42:
+ 1687 029b 2E2E5C2E 		.ascii	"..\\..\\Generador de senales\\main.c\000"
+ 1687      2E5C4765 
+ 1687      6E657261 
+ 1687      646F7220 
+ 1687      64652073 
+ 1688              	.LASF4:
+ 1689 02bd 6C6F6E67 		.ascii	"long int\000"
+ 1689      20696E74 
+ 1689      00
+ 1690              	.LASF15:
+ 1691 02c6 63686172 		.ascii	"char\000"
+ 1691      00
+ 1692              	.LASF25:
+ 1693 02cb 64697370 		.ascii	"display_init\000"
+ 1693      6C61795F 
+ 1693      696E6974 
+ 1693      00
+ 1694              	.LASF16:
+ 1695 02d8 6C6F6E67 		.ascii	"long double\000"
+ 1695      20646F75 
+ 1695      626C6500 
+ 1696              	.LASF0:
+ 1697 02e4 7369676E 		.ascii	"signed char\000"
+ 1697      65642063 
+ARM GAS  C:\Users\Usuario\AppData\Local\Temp\cc2sXriq.s 			page 35
+
+
+ 1697      68617200 
+ 1698              	.LASF27:
+ 1699 02f0 6766785F 		.ascii	"gfx_setTextColor\000"
+ 1699      73657454 
+ 1699      65787443 
+ 1699      6F6C6F72 
+ 1699      00
+ 1700              	.LASF35:
+ 1701 0301 73707269 		.ascii	"sprintf\000"
+ 1701      6E746600 
+ 1702              	.LASF39:
+ 1703 0309 43794465 		.ascii	"CyDelay\000"
+ 1703      6C617900 
+ 1704              	.LASF19:
+ 1705 0311 766F6C74 		.ascii	"voltaje\000"
+ 1705      616A6500 
+ 1706              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
